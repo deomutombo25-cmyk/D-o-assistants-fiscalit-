@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEO IA - Site Fiscalité</title>
+<style>
+body{margin:0;font-family:Arial;background:#0a0a15;color:white;text-align:center;padding:12px}
+header{padding:22px;background:linear-gradient(90deg,#0088ff,#00cc66);border-radius:20px}
+h1{margin:0;font-size:28px}
+.menu{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.menu button{padding:12px 18px;border:none;border-radius:30px;background:#2a2a45;color:white;font-weight:bold}
+.menu button.actif{background:#00cc66}
+.box{background:#1c1c2e;margin:12px 0;padding:16px;border-radius:20px;text-align:left}
+.chap{background:#2a2a45;margin:10px 0;padding:14px;border-radius:15px;border-left:5px solid #00cc66}
+.chap h3{margin:0 0 5px 0}
+.chap p{margin:0;color:#ccc;font-size:14px;line-height:1.5}
+.badge{display:inline-block;background:#ffcc00;color:black;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.badge-vide{background:#555;color:white}
+input{width:90%;padding:14px;border-radius:15px;border:none;margin:8px;text-align:center;font-size:16px}
+#reponse{background:#2a2a45;padding:16px;border-radius:15px;text-align:left;min-height:80px;font-size:16px;line-height:1.6;border:2px solid #00cc66;white-space:pre-wrap}
+button{padding:13px;border:none;border-radius:30px;background:#00cc66;color:white;font-weight:bold;margin:4px}
+.petit{font-size:13px;color:#aaa;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🤖 DEO IA - FISCALITÉ</h1>
+<p>Site de Cours de Fiscalité 🇨🇩<br>Pour Deo Mutombo - Kinshasa</p>
+<p>📚 On construit le site d'abord, on ajoute les cours après!</p>
+</header>
+
+<div class="menu">
+<button id="b-accueil" class="actif" onclick="voir('accueil')">🏠 Accueil</button>
+<button id="b-cours" onclick="voir('cours')">📚 Mes Cours</button>
+<button id="b-ia" onclick="voir('ia')">🤖 Poser Question</button>
+<button id="b-def" onclick="voir('def')">📖 Définitions</button>
+</div>
+
+<!-- ACCUEIL -->
+<div id="page-accueil">
+  <div class="box">
+    <h2>👋 Bienvenue Deo!</h2>
+    <p>Voici ton site de Fiscalité! C'est TA maison de fiscalité!</p>
+    <p><b>Comment ça marche?</b><br>
+    1. Tu vas dans <b>Mes Cours</b> pour voir les chapitres<br>
+    2. Tu vas dans <b>Poser Question</b> pour demander à DEO IA<br>
+    3. Tu vas dans <b>Définitions</b> pour réviser vite avant l'examen</p>
+    <p style="background:#2a2a45;padding:10px;border-radius:10px">📊 <b>Progression:</b> 1 chapitre ajouté / 10 chapitres prévus<br>On ajoute les autres après!</p>
+  </div>
+  <div class="box">
+    <h3>⚡ Chapitre du jour</h3>
+    <div class="chap"><h3>Chapitre 1: C'est quoi l'impôt?</h3><p>Définition de l'impôt selon Gaston Jèze. Clique sur Mes Cours pour lire!</p><p><span class="badge">✅ Déjà ajouté</span></p></div>
+  </div>
+</div>
+
+<!-- COURS -->
+<div id="page-cours" style="display:none">
+  <div class="box">
+    <h2>📚 Mes Cours de Fiscalité</h2>
+    <p>Voici tous les chapitres. Quand un chapitre est vert, c'est qu'il est déjà dedans. Quand il est gris, on va l'ajouter après!</p>
+
+    <div class="chap" onclick="ouvrirChap(1)"><h3>Chapitre 1: Notions Générales et l'Impôt</h3><p>C'est quoi la fiscalité? C'est quoi l'impôt? Définition de Gaston Jèze. Caractères de l'impôt.</p><p><span class="badge">✅ Déjà ajouté - Clique pour lire!</span></p></div>
+
+    <div class="chap"><h3>Chapitre 2: Impôt, Taxe, Redevance</h3><p>La différence entre les 3. Exemples au Congo.</p><p><span class="badge">✅ Déjà ajouté</span></p></div>
+
+    <div class="chap"><h3>Chapitre 3: La TVA</h3><p>Taxe sur la Valeur Ajoutée. Comment ça marche? 16% en RDC.</p><p><span class="badge">✅ Déjà ajouté</span></p></div>
+
+    <div class="chap" style="opacity:0.7"><h3>Chapitre 4: À venir...</h3><p>On va ajouter après. Dis à Deo quel chapitre tu veux ici!</p><p><span class="badge badge-vide">⏳ À ajouter après</span></p></div>
+
+    <div class="chap" style="opacity:0.7"><h3>Chapitre 5: À venir...</h3><p>On va ajouter après.</p><p><span class="badge badge-vide">⏳ À ajouter après</span></p></div>
+
+    <div class="chap" style="opacity:0.7"><h3>Chapitre 6: À venir...</h3><p>On va ajouter après.</p><p><span class="badge badge-vide">⏳ À ajouter après</span></p></div>
+
+    <div class="chap" style="opacity:0.7"><h3>Chapitre 7: À venir...</h3><p>On va ajouter après.</p><p><span class="badge badge-vide">⏳ À ajouter après</span></p></div>
+
+    <div class="chap" style="opacity:0.7"><h3>Chapitre 8: À venir...</h3><p>On va ajouter après.</p><p><span class="badge badge-vide">⏳ À ajouter après</span></p></div>
+
+    <div id="lecture" style="background:#0a0a15;padding:14px;border-radius:15px;display:none"></div>
+  </div>
+</div>
+
+<!-- IA -->
+<div id="page-ia" style="display:none">
+  <div class="box">
+    <h2>🤖 Pose ta question de Fiscalité!</h2>
+    <input type="text" id="question" placeholder="Ex: Définition de l'impôt selon Gaston Jèze" onkeypress="if(event.key==='Enter') envoyer()">
+    <br><center><button onclick="envoyer()" style="font-size:18px;width:90%">💬 DEMANDER À DEO IA</button>
+    <button onclick="ecouter()" style="background:#7b00ff">🔊 ÉCOUTER</button></center>
+    <div id="reponse" style="margin-top:12px">👋 Bonjour Deo! Pose-moi une question de fiscalité!</div>
+    <h3>⚡ Questions rapides:</h3>
+    <button onclick="tester('Définition de l impôt selon Gaston Jèze')">📚 Gaston Jèze</button>
+    <button onclick="tester('C est quoi la TVA?')">🧾 TVA</button>
+    <button onclick="tester('Différence entre impôt taxe redevance')">⚖️ Impôt / Taxe</button>
+    <button onclick="tester('C est quoi l IPR?')">👷 IPR</button>
+  </div>
+</div>
+
+<!-- DEFINITIONS -->
+<div id="page-def" style="display:none">
+  <div class="box">
+    <h2>📖 Définitions à retenir pour l'examen!</h2>
+    <div class="chap"><h3>💰 Impôt - Gaston Jèze</h3><p>« Prestation pécuniaire requise des particuliers par voie d'autorité, à titre définitif et sans contrepartie, en vue de la couverture des charges publiques. »</p></div>
+    <div class="chap"><h3>🧾 TVA</h3><p>Taxe sur la Valeur Ajoutée. Impôt sur la consommation. En RDC: 16%.</p></div>
+    <div class="chap"><h3>👷 IPR</h3><p>Impôt Professionnel sur les Rémunérations. Impôt sur le salaire.</p></div>
+    <div class="chap"><h3>📖 Fiscalité</h3><p>Ensemble des règles et lois sur les impôts.</p></div>
+    <div class="chap" style="opacity:0.7"><h3>⏳ Plus de définitions à venir...</h3><p>On ajoute après!</p></div>
+  </div>
+</div>
+
+<p class="petit">© Deo Mutombo 2026 - Site Fiscalité - Kinshasa 🇨🇩<br>Version 1: La maison est construite. On ajoute les cours après!</p>
+
+<script>
+function voir(page){
+  ['accueil','cours','ia','def'].forEach(p=>{
+    document.getElementById('page-'+p).style.display = (p===page?'block':'none');
+    document.getElementById('b-'+p).classList.toggle('actif', p===page);
+  });
+}
+function ouvrirChap(n){
+  let lec=document.getElementById('lecture');
+  lec.style.display='block';
+  if(n===1){
+    lec.innerHTML="<h3>📚 Chapitre 1: L'Impôt</h3><p><b>C'est quoi la fiscalité?</b><br>La fiscalité, c'est l'ensemble des règles sur les impôts. Ça permet à l'État de trouver de l'argent pour les routes, écoles, hôpitaux.</p><p><b>C'est quoi l'impôt?</b><br>L'impôt, c'est une somme d'argent obligatoire que l'on donne à l'État, sans recevoir quelque chose en échange direct.</p><p><b>Définition de Gaston Jèze (à retenir pour l'examen):</b><br>« Prestation pécuniaire requise des particuliers par voie d'autorité, à titre définitif et sans contrepartie, en vue de la couverture des charges publiques. »</p><p><b>Les 5 caractères:</b><br>1. Obligatoire<br>2. En argent<br>3. Définitif<br>4. Sans contrepartie<br>5. Par autorité</p>";
+  }
+}
+let cerveau=[
+{ mots:["gaston jèze","gaston jeze","jeze"], reponse:"📚 DÉFINITION DE L'IMPÔT SELON GASTON JÈZE:\n\n« L'impôt est une prestation pécuniaire requise des particuliers par voie d'autorité, à titre définitif et sans contrepartie, en vue de la couverture des charges publiques. »\n\n- En argent\n- Obligatoire\n- Définitif (on ne récupère pas)\n- Sans contrepartie\n- Pour payer les charges publiques" },
+{ mots:["différence","taxe redevance","impôt taxe"], reponse:"⚖️ IMPÔT / TAXE / REDEVANCE:\n\nIMPÔT = On paie SANS contrepartie. Ex: TVA, IPR\nTAXE = On paie CONTRE un service, même si on ne l'utilise pas. Ex: Taxe ordures\nREDEVANCE = On paie SEULEMENT si on utilise. Ex: Redevance télé" },
+{ mots:["tva"], reponse:"🧾 TVA = Taxe sur la Valeur Ajoutée.\nImpôt sur la consommation. En RDC: 16%.\nC'est le consommateur qui paie. Le vendeur collecte et donne à l'État.\nExemple: Pain 1000 FC + 16% = 1160 FC." },
+{ mots:["ipr"], reponse:"👷 IPR = Impôt Professionnel sur les Rémunérations.\nC'est l'impôt sur le SALAIRE.\nL'employeur retient sur le salaire et donne à l'État." },
+{ mots:["fiscalité","fiscalite"], reponse:"📖 La fiscalité, c'est l'ensemble des règles, lois et pratiques sur les impôts. Comment l'État crée, collecte les impôts." },
+{ mots:["impôt","impot"], reponse:"💰 L'impôt, c'est une somme d'argent obligatoire que l'on donne à l'État, sans contrepartie directe. Voir définition de Gaston Jèze!" },
+{ mots:["propriétaire","patron"], reponse:"👑 Mon propriétaire c'est DEO MUTOMBO de Kinshasa! Il a créé ce site de fiscalité!" },
+{ mots:["bonjour","salut"], reponse:"Bonjour Deo! 👋 C'est DEO IA Fiscalité! Va dans Mes Cours ou pose-moi une question!" }
+];
+function parler(q){
+  let qq=q.toLowerCase();
+  for(let i=0;i<cerveau.length;i++){ for(let j=0;j<cerveau[i].mots.length;j++){ if(qq.includes(cerveau[i].mots[j])) return cerveau[i].reponse; } }
+  return "Je suis DEO IA Fiscalité! Je ne connais pas encore cette question.\n\nOn va l'ajouter après! Pour l'instant, essaie:\n- Définition de l'impôt selon Gaston Jèze\n- C'est quoi la TVA?\n- Différence entre impôt, taxe, redevance";
+}
+function envoyer(){
+  let q=document.getElementById('question').value;
+  if(!q) return;
+  let rep=parler(q);
+  document.getElementById('reponse').innerText=rep;
+  let v=new SpeechSynthesisUtterance(rep.substring(0,500)); v.lang='fr-FR'; speechSynthesis.speak(v);
+}
+function tester(txt){ document.getElementById('question').value=txt; envoyer(); }
+function ecouter(){ let t=document.getElementById('reponse').innerText; let v=new SpeechSynthesisUtterance(t.substring(0,500)); v.lang='fr-FR'; speechSynthesis.speak(v); }
+</script>
+</body>
+  </html>
