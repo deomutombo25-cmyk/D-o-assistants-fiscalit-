@@ -22,7 +22,7 @@ input{width:95%;padding:12px;border-radius:10px;border:2px solid #00c853;font-si
 <div class="header">
 <h1>🤖 DEO IA - FISCALITÉ</h1>
 <p>Site de Cours de Fiscalité 🇨🇩<br>Pour Deo Mutombo - Kinshasa</p>
-<p>📚 TON COURS COMPLET EST ICI!</p>
+<p>📚 TON COURS COMPLET EST ICI! - SUPER MÉMOIRE!</p>
 </div>
 <div style="text-align:center;margin-top:10px">
 <button class="btn active" onclick="show('accueil',this)">🏠 Accueil</button>
@@ -34,7 +34,7 @@ input{width:95%;padding:12px;border-radius:10px;border:2px solid #00c853;font-si
 <h2>👋 Bienvenue Deo!</h2>
 <p>Voici ton site de Fiscalité! C'est TA maison de fiscalité!</p>
 <p>1. Tu vas dans <b>Mes Cours</b> pour voir les chapitres<br>2. Tu vas dans <b>Poser Question</b> pour demander à DEO IA<br>3. Tu vas dans <b>Définitions</b> pour réviser vite avant l'examen</p>
-<p>📊 <b>Progression: 11 chapitres - COURS COMPLET!</b></p>
+<p>📊 <b>Progression: 11 chapitres - COURS COMPLET! - DEO IA connait TOUT!</b></p>
 </div>
 <div id="cours" class="card" style="display:none">
 <h2>📚 Mes Cours - 11 Chapitres</h2>
@@ -53,7 +53,8 @@ input{width:95%;padding:12px;border-radius:10px;border:2px solid #00c853;font-si
 </div>
 <div id="question" class="card" style="display:none">
 <h2>🤖 Pose ta Question à DEO IA</h2>
-<input id="q" placeholder="Ex: C'est quoi les fonctions de l'impôt ?">
+<p>DEO IA connait TOUT ton cours! Demande n'importe quoi!</p>
+<input id="q" placeholder="Ex: C'est quoi l'impôt ? Que signifie TVA ?">
 <button class="ask" onclick="ask()">💬 DEMANDER À DEO IA</button>
 <button class="ask" style="background:#7c4dff" onclick="speak()">🔊 ÉCOUTER</button>
 <div id="rep" class="answer" style="display:none"></div>
@@ -65,16 +66,22 @@ input{width:95%;padding:12px;border-radius:10px;border:2px solid #00c853;font-si
 <button class="quick" onclick="fast('DGI')">🏛️ DGI</button>
 <button class="quick" onclick="fast('contrôle')">🔍 Contrôle</button>
 <button class="quick" onclick="fast('IBP')">💰 IBP</button>
+<button class="quick" onclick="fast('caractéristiques impôt')">✨ Caractéristiques</button>
+<button class="quick" onclick="fast('redevance')">🧾 Redevance</button>
+<button class="quick" onclick="fast('contribuable')">👤 Contribuable</button>
 </div>
 <div id="def" class="card" style="display:none">
 <h2>📖 Définitions Rapides</h2>
 <p><b>Impôt:</b> Prestation pécuniaire, sans contrepartie, pour les charges publiques.</p>
 <p><b>Taxe:</b> Prestation pécuniaire AVEC contrepartie d'un service.</p>
+<p><b>Redevance:</b> Somme payée pour l'usage d'un bien public. Ex: redevance minière.</p>
 <p><b>Fonctions (3):</b> 1. Répartition, 2. Interventionnisme, 3. Redistribution.</p>
+<p><b>Caractéristiques (5):</b> En argent, Obligatoire, Définitif, Sans contrepartie, Pour charges publiques.</p>
 <p><b>NIF:</b> Numéro d'Identification Fiscale.</p>
 <p><b>IPR:</b> Impôt Professionnel sur les Rémunérations.</p>
 <p><b>TVA:</b> Taxe sur la Valeur Ajoutée, 16% en RDC.</p>
 <p><b>IBP:</b> Impôt sur les Bénéfices et Profits, 30%.</p>
+<p><b>Contribuable:</b> Personne qui paie l'impôt.</p>
 <p><b>DGI:</b> Direction Générale des Impôts.</p>
 <p><b>DGDA:</b> Direction Générale des Douanes et Accises.</p>
 <p><b>DGRAD:</b> Direction Générale des Recettes Administratives...</p>
@@ -84,23 +91,35 @@ input{width:95%;padding:12px;border-radius:10px;border:2px solid #00c853;font-si
 function show(id,btn){['accueil','cours','question','def'].forEach(x=>document.getElementById(x).style.display='none');document.getElementById(id).style.display='block';document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
 function fast(t){document.getElementById('q').value=t;ask();}
 function ask(){
-let q=document.getElementById('q').value.toLowerCase();
+let raw=document.getElementById('q').value.toLowerCase();
+let q=raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 let r=document.getElementById('rep');r.style.display='block';let rep="";
-if(q.includes('gaston')||q.includes('jeze')) rep="📚 DÉFINITION DE L'IMPÔT SELON GASTON JÈZE:\n\n« L'impôt est une prestation pécuniaire requise des particuliers par voie d'autorité, à titre définitif et sans contrepartie, en vue de la couverture des charges publiques. »";
-else if(q.includes('fonction')) rep="🎯 LES 3 FONCTIONS DE L'IMPÔT (Selon ton Prof):\n\n1. RÉPARTITION DES CHARGES PUBLIQUES: Partager les dépenses de l'Etat entre tous pour payer routes, écoles, hôpitaux.\n\n2. INTERVENTIONNISME: L'Etat utilise l'impôt pour intervenir dans l'économie. Ex: baisser l'impôt pour encourager l'agriculture.\n\n3. REDISTRIBUTION DES REVENUS: Les riches paient plus, les pauvres moins.";
-else if(q.includes('numero')||q.includes('nif')) rep="🔢 LE NUMÉRO IMPÔT / NIF:\n\nC'est le numéro d'identification fiscale donné par la DGI. Il sert à identifier, payer ses impôts, faire ses déclarations.";
-else if(q.includes('différence')||q.includes('difference')) rep="⚖️ DIFFÉRENCE:\n\nIMPÔT = SANS contrepartie. Ex: IPR, TVA.\n\nTAXE = AVEC contrepartie. Ex: Taxe de voirie.";
-else if(q.includes('taxe')) rep="🧾 LA TAXE:\n\nPrestation pécuniaire en contrepartie d'un service rendu par l'Etat. Ex: Taxe de voirie.";
-else if(q.includes('contrôle')||q.includes('controle')) rep="🔍 PROCÉDURE DE CONTRÔLE:\n\n1. Contrôle sur pièces\n2. Contrôle sur place\n3. Avis de vérification (15 jours avant)\n4. Notification de redressement\n5. Réponse (30 jours)\n6. Recouvrement";
-else if(q.includes('dgi')) rep="🏛️ DGI - Direction Générale des Impôts: Collecte IPR, TVA, Bénéfices.";
-else if(q.includes('dgda')) rep="🏛️ DGDA - Direction Générale des Douanes et Accises: Droits de douane.";
-else if(q.includes('dgrad')) rep="🏛️ DGRAD - Recettes Administratives, Judiciaires, Domaniales et de Participations.";
-else if(q.includes('dgrk')) rep="🏛️ DGRK - Direction Générale des Recettes de Kinshasa.";
-else if(q.includes('ipr')) rep="💰 IPR - Impôt Professionnel sur les Rémunérations: Impôt sur les salaires.";
-else if(q.includes('ibp')||q.includes('bénéfice')) rep="💰 IBP - Impôt sur les Bénéfices et Profits: Taux 30% en RDC. Base = Recettes - Dépenses. Déclaration avant le 30 avril.";
-else if(q.includes('tva')) rep="🧾 TVA - Taxe sur la Valeur Ajoutée: 16% en RDC. Payée par le consommateur final.";
-else if(q.includes('impôt')||q.includes('impot')) rep="📚 L'IMPÔT: Selon Gaston Jèze: prestation pécuniaire, par voie d'autorité, à titre définitif et sans contrepartie, pour les charges publiques.";
-else rep="✅ Je suis DEO IA! Pose-moi une question sur: Gaston Jèze, Fonctions, Impôt, Taxe, Différence, Numéro Impôt, IPR, TVA, IBP, Contrôle, DGI, DGDA, DGRAD, DGRK.";
+// ORDRE IMPORTANT: on teste les mots les plus précis d'abord
+if(q.includes('gaston')||q.includes('jeze')) rep="📚 DÉFINITION DE L'IMPÔT SELON GASTON JÈZE:\n\n« L'impôt est une prestation pécuniaire requise des particuliers par voie d'autorité, à titre définitif et sans contrepartie, en vue de la couverture des charges publiques. »\n\nApprends-la par coeur pour l'examen!";
+else if(q.includes('fonction')) rep="🎯 LES 3 FONCTIONS DE L'IMPÔT (Selon ton Prof):\n\n1. RÉPARTITION DES CHARGES PUBLIQUES: Partager les dépenses de l'Etat entre tous pour payer routes, écoles, hôpitaux.\n\n2. INTERVENTIONNISME: L'Etat utilise l'impôt pour intervenir dans l'économie. Ex: Il baisse l'impôt pour encourager l'agriculture, il augmente l'impôt pour décourager le tabac.\n\n3. REDISTRIBUTION DES REVENUS: Les riches paient plus, les pauvres moins. L'Etat reprend aux riches pour aider les pauvres.\n\nRetiens: Répartition, Interventionnisme, Redistribution.";
+else if(q.includes('caracteristique')||q.includes('caracteristiques')) rep="✨ LES 5 CARACTÉRISTIQUES DE L'IMPÔT:\n\n1. En argent (pécuniaire): On paie en argent, pas en nature.\n2. Obligatoire: Tu ne peux pas refuser, c'est la loi.\n3. Définitif: L'argent ne te revient pas.\n4. Sans contrepartie: Tu paies sans recevoir un service direct en retour.\n5. Pour les charges publiques: Pour payer les dépenses de l'Etat.";
+else if(q.includes('tva')||q.includes('valeur ajoutee')) rep="🧾 TVA - TAXE SUR LA VALEUR AJOUTÉE:\n\nDéfinition: Impôt indirect sur la consommation.\nTaux: 16% en RDC.\nQui paie? Le consommateur final. L'entreprise collecte et reverse à la DGI.\nExemple: Tu achètes à 116.000 FC, dont 16.000 FC de TVA.\n\nDonc si on te demande 'Que signifie TVA?', tu réponds: Taxe sur la Valeur Ajoutée.";
+else if(q.includes('difference')||q.includes('differance')||(q.includes('impot')&&q.includes('taxe')&&q.includes('vs'))||q.includes('impot vs taxe')) rep="⚖️ DIFFÉRENCE ENTRE IMPÔT ET TAXE:\n\nIMPÔT = SANS contrepartie. Tu paies pour les charges publiques. Tu ne reçois rien directement. Ex: IPR, TVA, IBP.\n\nTAXE = AVEC contrepartie. Tu paies parce que tu utilises un service de l'Etat. Ex: Taxe de voirie, Taxe sur les véhicules.\n\nAstuce examen: Si on te demande la différence, dis: L'impôt est sans contrepartie, la taxe est avec contrepartie.";
+else if(q.includes('redevance')) rep="🧾 LA REDEVANCE:\n\nDéfinition: Somme d'argent payée pour l'utilisation d'un bien public ou d'un service public.\nExemple: Redevance minière, redevance pour l'eau, redevance pour l'exploitation d'une carrière.\n\nDifférence avec la taxe: La redevance, c'est pour utiliser un bien de l'Etat. La taxe, c'est pour un service.";
+else if(q.includes('contribuable')) rep="👤 LE CONTRIBUABLE:\n\nC'est la personne qui paie l'impôt. Ça peut être toi, moi, une entreprise.\n\nExemple: Si tu travailles et on te retient l'IPR sur ton salaire, TU es le contribuable.\n\nLe contribuable doit déclarer, payer, et garder ses papiers.";
+else if(q.includes('assiette')||q.includes('base imposable')||q.includes('base')) rep="📐 L'ASSIETTE / LA BASE IMPOSABLE:\n\nC'est la matière sur laquelle on calcule l'impôt. C'est la base du calcul.\n\nExemple IBP: Base = Bénéfice = Recettes - Dépenses.\nExemple IPR: Base = Ton salaire.\nExemple TVA: Base = Prix de vente.";
+else if(q.includes('declaration')) rep="📝 LA DÉCLARATION:\n\nC'est le papier que le contribuable remplit pour dire à la DGI combien il a gagné.\n\nPour l'IBP: Déclaration chaque année avant le 30 avril.\nSi tu ne déclares pas, la DGI te redresse!";
+else if(q.includes('redressement')||q.includes('notification')) rep="📩 NOTIFICATION DE REDRESSEMENT:\n\nC'est la lettre de la DGI qui te dit: 'Tu n'as pas tout payé, tu dois encore tant'.\n\nAprès ça, tu as 30 jours pour répondre. Si tu es d'accord, tu paies. Si tu n'es pas d'accord, tu contestes.";
+else if(q.includes('recouvrement')||q.includes('saisie')) rep="💰 LE RECOUVREMENT:\n\nC'est quand l'Etat récupère l'argent de l'impôt que tu n'as pas payé.\n\nSi tu ne paies pas après le redressement, on peut faire une saisie: on prend ton argent à la banque ou tes biens.";
+else if(q.includes('controle')||q.includes('verification')||q.includes('verifie')) rep="🔍 PROCÉDURE DE CONTRÔLE DES IMPÔTS (6 étapes):\n\n1. Contrôle sur pièces: La DGI vérifie ta déclaration au bureau.\n2. Contrôle sur place: L'agent vient dans ton entreprise.\n3. Avis de vérification: Lettre 15 jours avant la visite.\n4. Notification de redressement: On te dit combien tu dois en plus.\n5. Réponse du contribuable: Tu as 30 jours pour répondre.\n6. Recouvrement: Si tu ne paies pas, saisie.";
+else if(q.includes('numero')||q.includes(' nif')||q.trim()=='nif'||q.includes('identification fiscale')) rep="🔢 LE NUMÉRO IMPÔT / NIF:\n\nC'est le Numéro d'Identification Fiscale donné par la DGI à chaque contribuable.\nIl sert à: Identifier, payer ses impôts, faire ses déclarations.\nSans NIF, tu ne peux pas déclarer en RDC.";
+else if(q.includes('dgi')) rep="🏛️ DGI - DIRECTION GÉNÉRALE DES IMPÔTS:\n\nC'est elle qui collecte les impôts en RDC: IPR, TVA, IBP.\nC'est la plus importante pour ton cours.\nElle donne le NIF, elle contrôle, elle redresse.";
+else if(q.includes('dgda')||q.includes('douane')) rep="🏛️ DGDA - DIRECTION GÉNÉRALE DES DOUANES ET ACCISES:\n\nElle s'occupe des droits de douane: quand les marchandises entrent ou sortent du pays.\nExemple: Tu importes une voiture, tu paies à la DGDA.";
+else if(q.includes('dgrad')) rep="🏛️ DGRAD - DIRECTION GÉNÉRALE DES RECETTES ADMINISTRATIVES, JUDICIAIRES, DOMANIALES ET DE PARTICIPATIONS:\n\nElle collecte les recettes administratives, judiciaires, domaniales.\nExemple: Amendes, frais de justice, loyers des biens de l'Etat.";
+else if(q.includes('dgrk')||q.includes('kinshasa')) rep="🏛️ DGRK - DIRECTION GÉNÉRALE DES RECETTES DE KINSHASA:\n\nElle collecte les recettes de la ville de Kinshasa.\nExemple: Taxes de la ville de Kinshasa.";
+else if(q.includes('ipr')||q.includes('remuneration')||q.includes('salaire')) rep="💰 IPR - IMPÔT PROFESSIONNEL SUR LES RÉMUNÉRATIONS:\n\nC'est l'impôt sur les salaires.\nQui paie? Le travailleur.\nQui retient? L'employeur retient sur ton salaire et donne à la DGI.\nBarème progressif en RDC: plus tu gagnes, plus tu paies.";
+else if(q.includes('ibp')||q.includes('benefice')||q.includes('profit')) rep="💰 IBP - IMPÔT SUR LES BÉNÉFICES ET PROFITS:\n\nDéfinition: Impôt sur le bénéfice de l'entreprise.\nBase: Bénéfice = Recettes - Dépenses.\nTaux en RDC: 30% pour les sociétés.\nExemple: Bénéfice 10.000.000 FC = tu paies 3.000.000 FC.\nDéclaration: Chaque année, avant le 30 avril.";
+else if(q.includes('taxe')) rep="🧾 LA TAXE:\n\nDéfinition: Prestation pécuniaire requise en contrepartie d'un service rendu par l'Etat.\nExemples: Taxe de voirie, Taxe sur les véhicules.\n\nRappelle: TAXE = AVEC contrepartie. IMPÔT = SANS contrepartie.";
+else if(q.includes('impot')||q.includes('c est quoi')||q.includes('definition')||q.includes('signifie')||q.includes('veut dire')) rep="📚 L'IMPÔT - DÉFINITION COMPLÈTE:\n\nSelon Gaston Jèze: « L'impôt est une prestation pécuniaire requise des particuliers par voie d'autorité, à titre définitif et sans contrepartie, en vue de la couverture des charges publiques. »\n\nEn simple: C'est l'argent que l'Etat prend obligatoirement à tout le monde pour payer les dépenses du pays: routes, écoles, hôpitaux, policiers.\n\nSes 5 caractéristiques: En argent, Obligatoire, Définitif, Sans contrepartie, Pour charges publiques.\nSes 3 fonctions: Répartition, Interventionnisme, Redistribution.";
+else if(q.includes('pourquoi')||q.includes('etat')||q.includes('role')) rep="🏛️ POURQUOI L'ETAT COLLECTE L'IMPÔT?\n\nPour payer les charges publiques:\n- Construire les routes, écoles, hôpitaux\n- Payer les policiers, militaires, enseignants\n- Aider les pauvres (redistribution)\n- Intervenir dans l'économie\n\nSans impôt, l'Etat ne peut rien faire!";
+else if(q.includes('taux')||q.includes('pourcentage')||q.includes('combien')) rep="📊 LES TAUX À RETENIR POUR L'EXAMEN:\n\nTVA = 16% en RDC\nIBP = 30% pour les sociétés\nIPR = Barème progressif (plus tu gagnes, plus tu paies)\n\nExemple TVA: 116.000 FC = 100.000 + 16.000 de TVA.\nExemple IBP: Bénéfice 10.000.000 = 3.000.000 à payer.";
+else if(q.includes('examen')||q.includes('reviser')||q.includes('resume')) rep="📚 RÉSUMÉ POUR L'EXAMEN - RETIENS ÇA:\n\n1. Impôt selon Gaston Jèze: prestation pécuniaire, par voie d'autorité, définitive, sans contrepartie, pour charges publiques.\n2. 5 Caractéristiques: Argent, Obligatoire, Définitif, Sans contrepartie, Charges publiques.\n3. 3 Fonctions: Répartition, Interventionnisme, Redistribution.\n4. Impôt SANS contrepartie / Taxe AVEC contrepartie.\n5. TVA 16% / IBP 30% / IPR sur salaires.\n6. DGI, DGDA, DGRAD, DGRK.\n7. Contrôle: pièces, sur place, avis 15 jours, redressement, réponse 30 jours, recouvrement.";
+else rep="✅ Je suis DEO IA! Je connais TOUT ton cours!\n\nPose-moi une question sur:\n- Gaston Jèze, Impôt, Définition\n- Fonctions, Caractéristiques\n- Taxe, Redevance, Différence Impôt vs Taxe\n- Numéro Impôt / NIF, Contribuable, Assiette, Déclaration\n- IPR, TVA, IBP, Taux\n- Contrôle, Redressement, Recouvrement\n- DGI, DGDA, DGRAD, DGRK\n- Pourquoi l'Etat collecte l'impôt, Examen, Résumé\n\nExemple: Tape 'Que signifie la TVA ?' ou 'C'est quoi les fonctions de l'impôt ?'";
 r.innerText=rep;}
 function speak(){let t=document.getElementById('rep').innerText;if(!t){alert('Demande d’abord à DEO IA');return;}let u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';speechSynthesis.speak(u);}
 </script>
