@@ -3,217 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DEO IA - Fiscalite</title>
+<title>DEO IA TEST</title>
 <style>
 body{margin:0;font-family:Arial;background:#0f0f1e;color:white;padding:15px}
 .header{background:linear-gradient(90deg,#007bff,#00c853);border-radius:20px;padding:20px;text-align:center}
-h1{margin:0;font-size:28px}
-.btn{border:none;padding:12px 15px;border-radius:30px;margin:5px;font-weight:bold;cursor:pointer;color:white;background:#2a2a4a}
+.btn{border:none;padding:12px 15px;border-radius:30px;margin:5px;font-weight:bold;color:white;background:#2a2a4a}
 .btn.active{background:#00c853}
 .card{background:#1e1e35;border-radius:15px;padding:15px;margin-top:15px}
-.chap{background:#2a2a4a;border-radius:12px;padding:12px;margin:8px 0;border-left:5px solid #00c853}
-input{width:95%;padding:12px;border-radius:10px;border:2px solid #00c853;font-size:16px}
-.ask{background:#00c853;color:white;border:none;padding:12px;width:100%;border-radius:30px;font-weight:bold;font-size:17px;margin-top:10px}
+input{width:95%;padding:12px;border-radius:10px;border:2px solid #00c853}
+.ask{background:#00c853;color:white;border:none;padding:12px;width:100%;border-radius:30px;font-weight:bold;margin-top:10px}
 .answer{background:#1e1e35;border:2px solid #00c853;border-radius:15px;padding:15px;margin-top:15px;white-space:pre-line}
 .quick{background:#00c853;color:white;border:none;padding:8px 12px;border-radius:20px;margin:3px}
-.qbtn{display:block;width:100%;text-align:left;background:#2a2a4a;color:white;border:2px solid #444;padding:12px;border-radius:12px;margin:8px 0;font-size:16px;cursor:pointer}
-.qbtn.correct{background:#00c853!important}
-.qbtn.wrong{background:#ff1744!important}
 </style>
 </head>
 <body>
-<div class="header">
-<h1>DEO IA - FISCALITE</h1>
-<p>Site de Cours de Fiscalite Pour Deo Mutombo - Kinshasa</p>
-<p>SUPER COMPLET 30 QUESTIONS PLUS CALCULS PLUS AUTRES IMPOTS PLUS PIEGES PLUS QUIZ</p>
+<div class="header"><h1>DEO IA - TEST</h1><p>Si ca marche, on met le gros code apres</p></div>
+<div style="text-align:center">
+<button class="btn active" id="b1">Accueil</button>
+<button class="btn" id="b2">Mes Cours</button>
+<button class="btn" id="b3">Poser Question</button>
+<button class="btn" id="b4">Definitions</button>
 </div>
-<div style="text-align:center;margin-top:10px">
-<button class="btn active" data-page="accueil">Accueil</button>
-<button class="btn" data-page="cours">Mes Cours</button>
-<button class="btn" data-page="question">Poser Question</button>
-<button class="btn" data-page="quiz">QUIZ Examen</button>
-<button class="btn" data-page="def">Definitions</button>
-</div>
-
-<div id="accueil" class="card">
-<h2>Bienvenue Deo</h2>
-<p>DEO IA connait maintenant TOUT</p>
-<p>1. Mes Cours - 11 chapitres plus Calculs plus Autres impots<br>2. Poser Question - 30 questions plus Calculs plus Pieges<br>3. QUIZ - Entraine toi<br>4. Definitions - Revise vite</p>
-<p>Le plus complet de toute la classe</p>
-</div>
-
-<div id="cours" class="card" style="display:none">
-<h2>Mes Cours Complets</h2>
-<div class="chap"><b>Chapitre 1: Notions Generales</b><br>Impot, taxe, redevance. Pourquoi Etat collecte.</div>
-<div class="chap"><b>Chapitre 2: Gaston Jeze</b><br>L impot est une prestation pecuniaire requise des particuliers par voie d autorite, a titre definitif et sans contrepartie, en vue de la couverture des charges publiques.</div>
-<div class="chap"><b>Chapitre 3: Caracteristiques</b><br>En argent, Obligatoire, Definitif, Sans contrepartie, Pour charges publiques.</div>
-<div class="chap"><b>Chapitre 3 Bis: 3 Fonctions</b><br>1. Repartition 2. Interventionnisme 3. Redistribution.</div>
-<div class="chap"><b>Chapitre 4: IPR plus BAREME</b><br>Impot sur les salaires. Retenu par employeur. Bareme progressif: plus tu gagnes, plus le pourcentage monte.</div>
-<div class="chap"><b>Chapitre 5: NIF</b><br>Numero d Identification Fiscale. Pour declarer, aller a la DGI avec carte d identite plus formulaire.</div>
-<div class="chap"><b>Chapitre 6: Taxe</b><br>AVEC contrepartie.</div>
-<div class="chap"><b>Chapitre 7: Impot vs Taxe vs Redevance</b><br>IMPOT SANS / TAXE AVEC service / REDEVANCE pour usage d un bien public.</div>
-<div class="chap"><b>Chapitre 8: Controle</b><br>Sur pieces, Sur place, Avis 15 jours, Redressement, Reponse 30 jours, Recouvrement.</div>
-<div class="chap"><b>Chapitre 9: Directions</b><br>DGI: Impots. DGDA: Douanes. DGRAD: Recettes Administratives. DGRK: Kinshasa.</div>
-<div class="chap"><b>Chapitre 10: TVA plus CALCUL</b><br>TVA 16 pour cent en RDC. TVA a payer = TVA collectee moins TVA recuperee. Exemple: Collectee 160000 moins Recuperee 96000 = 64000 a payer.</div>
-<div class="chap"><b>Chapitre 11: IBP plus CALCUL</b><br>IBP 30 pour cent. Benefice = Recettes moins Charges deductibles. Exemple: Recettes 50M moins Depenses 30M = Benefice 20M. IBP = 20M x 30 pour cent = 6M.</div>
-<div class="chap"><b>Chapitre 12: AUTRES IMPOTS RDC</b><br><b>Impot foncier:</b> Sur ta parcelle et ta maison.<br><b>Revenus locatifs:</b> Sur le loyer que tu recois. Retenue 20 pour cent.<br><b>Patente:</b> Taxe pour avoir le droit d exercer un commerce.<br><b>Accises:</b> Sur alcool, tabac, carburant.<br><b>Impot minimum:</b> 1 pour cent du chiffre d affaires meme si tu n as pas gagne.</div>
-<div class="chap"><b>Chapitre 13: QUESTIONS PIEGES</b><br><b>Direct vs Indirect:</b> Direct = tu paies toi meme. Indirect = un autre collecte pour toi.<br><b>Fait generateur:</b> Evenement qui fait naitre l impot. Exemple: Pour IPR, c est quand tu recois ton salaire.<br><b>Exigibilite:</b> Moment ou Etat peut te demander de payer.<br><b>Fraude vs Evasion:</b> Fraude = illegal. Evasion = legal mais malin.</div>
-</div>
-
-<div id="question" class="card" style="display:none">
-<h2>Pose TOUTES tes Questions a DEO IA</h2>
-<input id="q" placeholder="Ex: Calcule IPR de 800000, C est quoi la patente">
-<button class="ask" id="askBtn">DEMANDER A DEO IA</button>
-<button class="ask" style="background:#7c4dff" id="speakBtn">ECOUTER</button>
-<div id="rep" class="answer" style="display:none"></div>
-
-<p><b>CALCULS:</b></p>
-<button class="quick" data-q="calcule ipr">Calcul IPR</button>
-<button class="quick" data-q="bareme ipr">Bareme IPR</button>
-<button class="quick" data-q="calcule tva">Calcul TVA</button>
-<button class="quick" data-q="calcule ibp">Calcul IBP</button>
-
-<p><b>AUTRES IMPOTS:</b></p>
-<button class="quick" data-q="impot foncier">Impot foncier</button>
-<button class="quick" data-q="revenus locatifs">Revenus locatifs</button>
-<button class="quick" data-q="patente">Patente</button>
-<button class="quick" data-q="accises">Accises</button>
-<button class="quick" data-q="impot minimum">Impot minimum</button>
-<button class="quick" data-q="retenue loyer">Retenue loyer</button>
-
-<p><b>PAPIERS:</b></p>
-<button class="quick" data-q="declarer tva">Declarer TVA</button>
-<button class="quick" data-q="quitus fiscal">Quitus fiscal</button>
-<button class="quick" data-q="obtenir nif">Obtenir NIF</button>
-<button class="quick" data-q="avis imposition">Avis imposition</button>
-
-<p><b>PIEGES EXAMEN:</b></p>
-<button class="quick" data-q="contribuable fait droit">Fait et Droit</button>
-<button class="quick" data-q="fait generateur">Fait generateur</button>
-<button class="quick" data-q="exigibilite">Exigibilite</button>
-<button class="quick" data-q="fraude evasion">Fraude vs Evasion</button>
-<button class="quick" data-q="paradis fiscal">Paradis fiscal</button>
-<button class="quick" data-q="territorialite">Territorialite</button>
-<button class="quick" data-q="direct indirect">Direct Indirect</button>
-
-<p><b>TES 30 QUESTIONS:</b></p>
-<button class="quick" data-q="valeur ajoutee">1. Valeur ajoutee</button>
-<button class="quick" data-q="tva neutre">2. TVA neutre</button>
-<button class="quick" data-q="credit tva">3. Credit TVA</button>
-<button class="quick" data-q="vente perte">4. Vente a perte</button>
-<button class="quick" data-q="exoneres">5. Exoneres</button>
-<button class="quick" data-q="acheter etranger">6. Achat etranger</button>
-<button class="quick" data-q="facture obligatoire">7. Facture</button>
-<button class="quick" data-q="benefice fiscal">8. Benefice fiscal</button>
-<button class="quick" data-q="payer sans gagner">9. Payer sans gagner</button>
-<button class="quick" data-q="benefice pas chiffre">10. Benefice pas CA</button>
-<button class="quick" data-q="charge deductible">11. Deductible</button>
-<button class="quick" data-q="deux entreprises">12. Meme gain</button>
-<button class="quick" data-q="employeur retient">13. Employeur retient</button>
-<button class="quick" data-q="stagiaire">14. Stagiaire</button>
-<button class="quick" data-q="primes avantages">15. Primes</button>
-<button class="quick" data-q="2 mois ipr">16. 2 mois</button>
-<button class="quick" data-q="dgi dgda dgrad">17. DGI DGDA</button>
-<button class="quick" data-q="difference taxe impot redevance">18. Taxe Impot Redevance</button>
-<button class="quick" data-q="assiette fiscale">19. Assiette</button>
-<button class="quick" data-q="controle fiscal">20. Controle</button>
-<button class="quick" data-q="amende fiscale">21. Amende</button>
-<button class="quick" data-q="pas accord impot">22. Pas d accord</button>
-<button class="quick" data-q="prescription fiscale">23. Prescription</button>
-<button class="quick" data-q="lois changent">24. Lois changent</button>
-<button class="quick" data-q="mineur impot">25. Mineur</button>
-<button class="quick" data-q="eglise ong">26. Eglise ONG</button>
-<button class="quick" data-q="prison impot">27. Prison</button>
-<button class="quick" data-q="double imposition">28. Double imposition</button>
-<button class="quick" data-q="riches moins">29. Riches</button>
-<button class="quick" data-q="developpement congo">30. Developpement Congo</button>
-</div>
-
-<div id="quiz" class="card" style="display:none">
-<h2>QUIZ D EXAMEN - 10 Questions</h2>
-<div id="quizBox"></div>
-<button class="ask" id="nextBtn" style="display:none">Question Suivante</button>
-<button class="ask" style="background:#ff9800" id="restartBtn">RECOMMENCER</button>
-<div id="quizScore" class="answer" style="display:none"></div>
-</div>
-
-<div id="def" class="card" style="display:none">
-<h2>Definitions Rapides</h2>
-<p><b>Impot:</b> Sans contrepartie. <b>Taxe:</b> Avec contrepartie. <b>Redevance:</b> Pour usage d un bien public.</p>
-<p><b>TVA:</b> 16 pour cent, neutre pour entreprise. <b>IBP:</b> 30 pour cent sur benefice. <b>IPR:</b> Sur salaires.</p>
-<p><b>Direct:</b> Tu paies toi meme. <b>Indirect:</b> Un autre collecte.</p>
-<p><b>Fraude:</b> Illegal. <b>Evasion:</b> Legal mais malin.</p>
-<p><b>Patente:</b> Pour exercer un commerce. <b>Accises:</b> Sur alcool, tabac, carburant.</p>
-<p><b>Quitus:</b> Papier qui prouve que tu as tout paye.</p>
-</div>
-
+<div id="accueil" class="card"><h2>Bienvenue Deo</h2><p>Appuie sur Mes Cours pour tester</p></div>
+<div id="cours" class="card" style="display:none"><h2>Mes Cours</h2><p>BRAVO CA MARCHE</p><p>Chapitre 1: Impot</p><p>Chapitre 2: Gaston Jeze</p><p>Chapitre 3: TVA 16 pour cent</p><p>Chapitre 4: IBP 30 pour cent</p></div>
+<div id="question" class="card" style="display:none"><h2>Pose Question</h2><input id="q" placeholder="Ecris ici"><button class="ask" id="askBtn">DEMANDER</button><div id="rep" class="answer" style="display:none"></div><button class="quick" id="q1">Valeur ajoutee</button><button class="quick" id="q2">TVA neutre</button><button class="quick" id="q3">Calcul IPR</button></div>
+<div id="def" class="card" style="display:none"><h2>Definitions</h2><p>Impot: Sans contrepartie</p><p>Taxe: Avec contrepartie</p></div>
 <script>
-var pages = ["accueil","cours","question","quiz","def"];
-function ouvrir(id, btn) {
-  for (var i = 0; i < pages.length; i++) {
-    var el = document.getElementById(pages[i]);
-    if (el) { el.style.display = "none"; }
-  }
-  var target = document.getElementById(id);
-  if (target) { target.style.display = "block"; }
-  var tous = document.querySelectorAll(".btn");
-  for (var j = 0; j < tous.length; j++) { tous[j].classList.remove("active"); }
-  if (btn) { btn.classList.add("active"); }
-  if (id === "quiz") { startQuiz(); }
+function montrer(id){
+document.getElementById("accueil").style.display="none";
+document.getElementById("cours").style.display="none";
+document.getElementById("question").style.display="none";
+document.getElementById("def").style.display="none";
+document.getElementById(id).style.display="block";
+document.getElementById("b1").style.background="#2a2a4a";
+document.getElementById("b2").style.background="#2a2a4a";
+document.getElementById("b3").style.background="#2a2a4a";
+document.getElementById("b4").style.background="#2a2a4a";
+if(id=="accueil"){document.getElementById("b1").style.background="#00c853";}
+if(id=="cours"){document.getElementById("b2").style.background="#00c853";}
+if(id=="question"){document.getElementById("b3").style.background="#00c853";}
+if(id=="def"){document.getElementById("b4").style.background="#00c853";}
 }
-var navBtns = document.querySelectorAll("[data-page]");
-for (var n = 0; n < navBtns.length; n++) {
-  navBtns[n].addEventListener("click", function() {
-    ouvrir(this.getAttribute("data-page"), this);
-  });
+document.getElementById("b1").onclick=function(){montrer("accueil");};
+document.getElementById("b2").onclick=function(){montrer("cours");};
+document.getElementById("b3").onclick=function(){montrer("question");};
+document.getElementById("b4").onclick=function(){montrer("def");};
+function repondre(){
+var txt=document.getElementById("q").value.toLowerCase();
+var rep=document.getElementById("rep");
+rep.style.display="block";
+if(txt.indexOf("valeur")>=0){rep.innerText="VALEUR AJOUTEE = Prix de vente moins Prix d achat. Exemple: Achete 10000, vend 16000, Valeur Ajoutee = 6000.";}
+else if(txt.indexOf("neutre")>=0){rep.innerText="TVA NEUTRE: L entreprise ne paie pas de sa poche. Elle collecte sur ventes, recupere sur achats, donne difference a DGI.";}
+else if(txt.indexOf("ipr")>=0){rep.innerText="CALCUL IPR 800000: 0 sur 100000 premiers + 200000 x 15 pour cent = 30000 + 300000 x 20 pour cent = 60000 + 200000 x 30 pour cent = 60000. TOTAL = 150000. Net = 650000.";}
+else{rep.innerText="Je suis DEO IA TEST. Demande moi: Valeur ajoutee, TVA neutre, Calcul IPR.";}
 }
-document.getElementById("askBtn").addEventListener("click", ask);
-document.getElementById("speakBtn").addEventListener("click", speak);
-document.getElementById("nextBtn").addEventListener("click", nextQ);
-document.getElementById("restartBtn").addEventListener("click", startQuiz);
-var quickBtns = document.querySelectorAll(".quick");
-for (var qq = 0; qq < quickBtns.length; qq++) {
-  quickBtns[qq].addEventListener("click", function() {
-    document.getElementById("q").value = this.getAttribute("data-q");
-    ask();
-  });
-}
-function ask() {
-  var raw = document.getElementById("q").value.toLowerCase();
-  var q = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  var r = document.getElementById("rep");
-  r.style.display = "block";
-  var rep = "";
-  if (q.indexOf("calcule ipr") >= 0 || q.indexOf("ipr salaire") >= 0) { rep = "CALCUL IPR - EXEMPLE SALAIRE 800000 FC:\n\nBareme simplifie:\n- 0 a 100000 = 0 pour cent\n- 100001 a 300000 = 15 pour cent\n- 300001 a 600000 = 20 pour cent\n- 600001 a 1000000 = 30 pour cent\n\nPour 800000:\n- 0 sur les 100000 premiers\n- 200000 x 15 pour cent = 30000\n- 300000 x 20 pour cent = 60000\n- 200000 x 30 pour cent = 60000\nTOTAL IPR = 150000 FC\nSalaire net = 800000 moins 150000 = 650000 FC"; }
-  else if (q.indexOf("bareme") >= 0) { rep = "BAREME PROGRESSIF IPR:\n\n- 0 a 100000 = 0 pour cent\n- 100001 a 300000 = 15 pour cent\n- 300001 a 600000 = 20 pour cent\n- 600001 a 1000000 = 30 pour cent\n- Plus de 1000000 = 40 pour cent\n\nPlus tu gagnes, plus le taux monte. C est la redistribution."; }
-  else if (q.indexOf("calcule tva") >= 0) { rep = "CALCUL TVA - EXEMPLE:\n\nFormule: TVA A PAYER = TVA collectee moins TVA recuperee\n\nTu as vendu 1000000, tu as achete 600000:\n1. TVA collectee: 1000000 x 16 pour cent = 160000\n2. TVA recuperee: 600000 x 16 pour cent = 96000\n3. TVA A PAYER: 160000 moins 96000 = 64000 FC a donner a la DGI"; }
-  else if (q.indexOf("calcule ibp") >= 0) { rep = "CALCUL IBP - EXEMPLE:\n\nRecettes 50000000, Depenses 30000000\n1. Benefice = 50000000 moins 30000000 = 20000000\n2. IBP = 20000000 x 30 pour cent = 6000000 FC\nIl te reste 14000000 de benefice net.\nDeclaration avant le 30 avril."; }
-  else if (q.indexOf("foncier") >= 0) { rep = "IMPOT FONCIER:\n\nImpot sur ta parcelle et ta maison a Kinshasa. Tu paies chaque annee a la DGRK ou DGI. Plus ta parcelle est grande et bien situee, plus tu paies. C est un impot direct."; }
-  else if (q.indexOf("locatifs") >= 0 || q.indexOf("retenue loyer") >= 0) { rep = "REVENUS LOCATIFS:\n\nImpot quand tu loues ta maison et tu recois un loyer. Retenue 20 pour cent.\nExemple: Loyer 500000, retenue 100000, tu recois 400000. Le locataire envoie les 100000 a la DGI."; }
-  else if (q.indexOf("patente") >= 0) { rep = "PATENTE:\n\nTaxe pour avoir le droit d exercer un commerce. Boutique, salon, restaurant: tu dois payer chaque annee. Sans patente, on peut fermer ta boutique."; }
-  else if (q.indexOf("accise") >= 0) { rep = "ACCISES:\n\nImpot special sur alcool, tabac, carburant, boissons sucrees, vehicules de luxe. Pour gagner de l argent et pour decourager: si la cigarette est chere, les gens fument moins. C est l interventionnisme."; }
-  else if (q.indexOf("minimum") >= 0) { rep = "IMPOT MINIMUM:\n\nImpot minimum a payer MEME si tu declares 0 benefice. 1 pour cent du chiffre d affaires.\nExemple: Vendu 20000000, benefice 0, tu paies quand meme 200000. C est pour eviter la fraude."; }
-  else if (q.indexOf("declarer tva") >= 0) { rep = "QUAND DECLARER LA TVA:\n\nChaque MOIS, avant le 15 du mois suivant. Exemple: TVA de janvier, tu declares avant le 15 fevrier. Si tu es en retard, penalite."; }
-  else if (q.indexOf("quitus") >= 0) { rep = "QUITUS FISCAL:\n\nPapier qui prouve que tu as TOUT paye et que tu ne dois RIEN a l Etat. Tu en as besoin pour marche public, pret a la banque, vendre ta parcelle."; }
-  else if (q.indexOf("obtenir nif") >= 0 || q.indexOf("nif") >= 0) { rep = "COMMENT OBTENIR SON NIF:\n\nVa a la DGI avec carte d identite plus 2 photos plus preuve d adresse. Pour une entreprise, ajoute RCCM et statuts. C est gratuit. Sans NIF, tu ne peux pas declarer."; }
-  else if (q.indexOf("avis imposition") >= 0) { rep = "AVIS D IMPOSITION:\n\nLettre de la DGI qui dit: Deo, tu dois payer tant. Il y a ton nom, ton NIF, la base, le taux, le montant, la date limite. Si tu n es pas d accord, tu as 30 jours pour contester."; }
-  else if (q.indexOf("fait droit") >= 0 || q.indexOf("contribuable") >= 0) { rep = "CONTRIBUABLE DE FAIT ET DE DROIT:\n\nDe droit = Celui que la loi dit qu il doit payer.\nDe fait = Celui qui paie vraiment de sa poche.\nExemple TVA: De droit = entreprise. De fait = consommateur final."; }
-  else if (q.indexOf("fait generateur") >= 0 || q.indexOf("generateur") >= 0) { rep = "FAIT GENERATEUR:\n\nEvenement qui fait NAITRE l impot.\n- IPR: quand tu recois ton salaire\n- TVA: quand tu vends\n- IBP: quand tu realises un benefice\n- Foncier: quand tu possedes une parcelle au 1er janvier"; }
-  else if (q.indexOf("exigibilite") >= 0) { rep = "EXIGIBILITE:\n\nMoment ou l Etat a le droit de te demander de payer.\nExemple TVA: Tu vends le 5 janvier, tu dois payer avant le 15 fevrier.\nFait generateur = naissance. Exigibilite = moment ou tu dois payer."; }
-  else if (q.indexOf("fraude") >= 0 || q.indexOf("evasion") >= 0) { rep = "FRAUDE vs EVASION:\n\nFRAUDE = ILLEGAL. Fausses factures, cacher des ventes. Punition: Amende plus Prison.\nEVASION = LEGAL. Tu utilises la loi pour payer moins. Exemple: tu investis dans l agriculture exoneree.\nFraude = tu CACHES. Evasion = tu UTILISES la loi."; }
-  else if (q.indexOf("paradis") >= 0) { rep = "PARADIS FISCAL:\n\nPays ou on paie tres peu ou pas d impot. Exemples: Panama, Bahamas, Monaco, Dubai. Les riches y mettent leur argent pour ne pas payer dans leur pays."; }
-  else if (q.indexOf("territorialite") >= 0) { rep = "TERRITORIALITE:\n\nTu paies l impot dans le pays ou tu GAGNES l argent. Tu travailles a Kinshasa, tu paies en RDC, meme si tu es etranger."; }
-  else if (q.indexOf("direct indirect") >= 0 || q.indexOf("direct") >= 0) { rep = "DIRECT vs INDIRECT:\n\nDIRECT = Tu paies directement a l Etat. Exemples: IPR, IBP, Foncier.\nINDIRECT = Tu paies par quelqu un d autre. Exemple: TVA. Le consommateur paie, l entreprise collecte et donne a la DGI."; }
-  else if (q.indexOf("valeur ajoutee") >= 0) { rep = "1. VALEUR AJOUTEE:\n\nValeur Ajoutee = Prix de vente moins Prix d achat. C est la richesse que l entreprise CREE.\nExemple: Achete 10000, vend 16000, Valeur Ajoutee = 6000."; }
-  else if (q.indexOf("tva neutre") >= 0 || q.indexOf("neutre") >= 0) { rep = "2. TVA NEUTRE:\n\nL entreprise ne paie pas la TVA de sa poche. Elle collecte sur ses ventes, recupere sur ses achats, donne la difference a la DGI. C est le consommateur final qui paie vraiment."; }
-  else if (q.indexOf("credit tva") >= 0 || q.indexOf("recuperer") >= 0) { rep = "3. CREDIT TVA:\n\nSi TVA a recuperer plus grande que TVA a payer, tu as un CREDIT. Tu ne paies rien ce mois ci, le credit reste pour le mois prochain."; }
-  else if (q.indexOf("vente perte") >= 0) { rep = "4. VENTE A PERTE:\n\nOUI, tu paies quand meme la TVA. Car la TVA est sur la VENTE, pas sur le benefice. Tu vends a perte a 80000, tu dois la TVA sur 80000."; }
-  else if (q.indexOf("exoneres") >= 0) { rep = "5. EXONERES:\n\nEtat exonere pour proteger les pauvres: pain, farine, medicaments, eau, education, sante. Les produits de luxe ne sont pas exoneres."; }
-  else if (q.indexOf("acheter etranger") >= 0 || q.indexOf("etranger") >= 0) { rep = "6. ACHAT EN LIGNE ETRANGER:\n\nTu paies la TVA de la RDC, pays du consommateur. Quand ton colis arrive, la DGDA te demande TVA 16 pour cent plus droits de douane."; }
-  else if (q.indexOf("facture") >= 0) { rep = "7. FACTURE OBLIGATOIRE:\n\nSans facture, pas de preuve. La facture prouve que tu as paye la TVA sur tes achats pour la recuperer. Pas de facture = pas de TVA recuperee."; }
-  else if (q.indexOf("benefice fiscal") >= 0) { rep = "8. BENEFICE FISCAL vs COMPTABLE:\n\nComptable = Recettes moins Toutes depenses.\nFiscal = Comptable plus Charges NON deductibles moins Deductions. Tu paies sur le fiscal."; }
-  else if (q.indexOf("payer sans gagner") >= 0) { rep = "9. PAYER SANS GAGNER:\n\nOUI. TVA meme a perte plus Impot minimum 1 pour cent plus Patente. Donc meme sans benefice, tu paies."; }
-  else if (q.indexOf("benefice pas chiffre") >= 0) { rep = "10. POURQUOI BENEFICE ET PAS CHIFFRE D AFFAIRES:\n\nParce que ce serait injuste. Deux entreprises vendent 100M, l une depense 90M, l autre 50M. Si on impose le CA, elles paient pareil alors que l une est 5 fois plus riche."; }
-  else if (q.indexOf("charge deductible") >= 0 || q.indexOf("deductible") >= 0) { rep = "11. CHARGE DEDUCTIBLE:\n\nDeductible: salaire, loyer, electricite, achat marchandises.\nNon deductible: amendes, depenses perso du patron, cadeaux excessifs."; }
-  else if (q.indexOf("deux entreprises") >= 0) { rep = "12. MEME GAIN, PAS MEME IMPOT:\n\nParce qu elles n ont pas les memes charges deductibles, les memes exonerations, les memes pertes passees."; }
-  else if (q.indexOf("employeur retien
+document.getElementById("askBtn").onclick=repondre;
+document.getElementById("q1").onclick=function(){document.getElementById("q").value="valeur ajoutee";repondre();};
+document.getElementById("q2").onclick=function(){document.getElementById("q").value="tva neutre";repondre();};
+document.getElementById("q3").onclick=function(){document.getElementById("q").value="calcule ipr";repondre();};
+</script>
+</body>
+</html>
