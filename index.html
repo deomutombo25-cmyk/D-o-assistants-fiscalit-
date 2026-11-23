@@ -1,66 +1,19 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DEO IA TEST</title>
-<style>
-body{margin:0;font-family:Arial;background:#0f0f1e;color:white;padding:15px}
-.header{background:linear-gradient(90deg,#007bff,#00c853);border-radius:20px;padding:20px;text-align:center}
-.btn{border:none;padding:12px 15px;border-radius:30px;margin:5px;font-weight:bold;color:white;background:#2a2a4a}
-.btn.active{background:#00c853}
-.card{background:#1e1e35;border-radius:15px;padding:15px;margin-top:15px}
-input{width:95%;padding:12px;border-radius:10px;border:2px solid #00c853}
-.ask{background:#00c853;color:white;border:none;padding:12px;width:100%;border-radius:30px;font-weight:bold;margin-top:10px}
-.answer{background:#1e1e35;border:2px solid #00c853;border-radius:15px;padding:15px;margin-top:15px;white-space:pre-line}
-.quick{background:#00c853;color:white;border:none;padding:8px 12px;border-radius:20px;margin:3px}
-</style>
-</head>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TEST</title><style>body{background:#0f0f1e;color:white;font-family:Arial;padding:15px}button{padding:12px;margin:5px;border-radius:20px}.card{background:#1e1e35;padding:15px;border-radius:15px;margin-top:10px}</style></head>
 <body>
-<div class="header"><h1>DEO IA - TEST</h1><p>Si ca marche, on met le gros code apres</p></div>
-<div style="text-align:center">
-<button class="btn active" id="b1">Accueil</button>
-<button class="btn" id="b2">Mes Cours</button>
-<button class="btn" id="b3">Poser Question</button>
-<button class="btn" id="b4">Definitions</button>
-</div>
-<div id="accueil" class="card"><h2>Bienvenue Deo</h2><p>Appuie sur Mes Cours pour tester</p></div>
-<div id="cours" class="card" style="display:none"><h2>Mes Cours</h2><p>BRAVO CA MARCHE</p><p>Chapitre 1: Impot</p><p>Chapitre 2: Gaston Jeze</p><p>Chapitre 3: TVA 16 pour cent</p><p>Chapitre 4: IBP 30 pour cent</p></div>
-<div id="question" class="card" style="display:none"><h2>Pose Question</h2><input id="q" placeholder="Ecris ici"><button class="ask" id="askBtn">DEMANDER</button><div id="rep" class="answer" style="display:none"></div><button class="quick" id="q1">Valeur ajoutee</button><button class="quick" id="q2">TVA neutre</button><button class="quick" id="q3">Calcul IPR</button></div>
-<div id="def" class="card" style="display:none"><h2>Definitions</h2><p>Impot: Sans contrepartie</p><p>Taxe: Avec contrepartie</p></div>
+<h1>DEO IA TEST</h1>
+<button onclick="go('a')">Accueil</button>
+<button onclick="go('b')">Mes Cours</button>
+<button onclick="go('c')">Question</button>
+<div id="a" class="card"><h2>Accueil</h2><p>Appuie sur Mes Cours</p></div>
+<div id="b" class="card" style="display:none"><h2>Mes Cours</h2><p>BRAVO CA MARCHE !</p><p>TVA 16% - IBP 30%</p></div>
+<div id="c" class="card" style="display:none"><h2>Question</h2><p>Si tu vois ca, les boutons marchent !</p></div>
 <script>
-function montrer(id){
-document.getElementById("accueil").style.display="none";
-document.getElementById("cours").style.display="none";
-document.getElementById("question").style.display="none";
-document.getElementById("def").style.display="none";
-document.getElementById(id).style.display="block";
-document.getElementById("b1").style.background="#2a2a4a";
-document.getElementById("b2").style.background="#2a2a4a";
-document.getElementById("b3").style.background="#2a2a4a";
-document.getElementById("b4").style.background="#2a2a4a";
-if(id=="accueil"){document.getElementById("b1").style.background="#00c853";}
-if(id=="cours"){document.getElementById("b2").style.background="#00c853";}
-if(id=="question"){document.getElementById("b3").style.background="#00c853";}
-if(id=="def"){document.getElementById("b4").style.background="#00c853";}
+function go(x){
+document.getElementById("a").style.display="none";
+document.getElementById("b").style.display="none";
+document.getElementById("c").style.display="none";
+document.getElementById(x).style.display="block";
 }
-document.getElementById("b1").onclick=function(){montrer("accueil");};
-document.getElementById("b2").onclick=function(){montrer("cours");};
-document.getElementById("b3").onclick=function(){montrer("question");};
-document.getElementById("b4").onclick=function(){montrer("def");};
-function repondre(){
-var txt=document.getElementById("q").value.toLowerCase();
-var rep=document.getElementById("rep");
-rep.style.display="block";
-if(txt.indexOf("valeur")>=0){rep.innerText="VALEUR AJOUTEE = Prix de vente moins Prix d achat. Exemple: Achete 10000, vend 16000, Valeur Ajoutee = 6000.";}
-else if(txt.indexOf("neutre")>=0){rep.innerText="TVA NEUTRE: L entreprise ne paie pas de sa poche. Elle collecte sur ventes, recupere sur achats, donne difference a DGI.";}
-else if(txt.indexOf("ipr")>=0){rep.innerText="CALCUL IPR 800000: 0 sur 100000 premiers + 200000 x 15 pour cent = 30000 + 300000 x 20 pour cent = 60000 + 200000 x 30 pour cent = 60000. TOTAL = 150000. Net = 650000.";}
-else{rep.innerText="Je suis DEO IA TEST. Demande moi: Valeur ajoutee, TVA neutre, Calcul IPR.";}
-}
-document.getElementById("askBtn").onclick=repondre;
-document.getElementById("q1").onclick=function(){document.getElementById("q").value="valeur ajoutee";repondre();};
-document.getElementById("q2").onclick=function(){document.getElementById("q").value="tva neutre";repondre();};
-document.getElementById("q3").onclick=function(){document.getElementById("q").value="calcule ipr";repondre();};
 </script>
-</body>
-</html>
+</body></html>
