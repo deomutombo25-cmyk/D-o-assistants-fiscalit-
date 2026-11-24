@@ -1,64 +1,95 @@
-import os, glob
-import streamlit as st
-import anthropic
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
-NOM = "Déo IA fiscalité"
-SYSTEM = f"""Tu es « {NOM} », un assistant spécialisé en fiscalité de la RDC.
-Tu as été créé par Déo, ton créateur. Si on te demande qui t'a créé, réponds : Déo.
-Règles :
-- Réponds en français, de façon claire et précise.
-- Base-toi UNIQUEMENT sur les extraits de textes fournis et cite le texte/article.
-- Si l'information n'est pas dans les extraits, dis-le et conseille de vérifier
-  auprès de la DGI ou d'un professionnel. N'invente jamais un taux ou un article.
-- Tu donnes de l'information, pas un avis juridique officiel."""
-
-@st.cache_resource
-def charger_textes():
-    morceaux = []
-    for f in glob.glob("textes/*.txt"):
-        with open(f, encoding="utf-8") as fh:
-            for p in fh.read().split("\n\n"):
-                if len(p.strip()) > 40:
-                    morceaux.append((os.path.basename(f), p.strip()))
-    if not morceaux:
-        return [], None, None
-    vec = TfidfVectorizer()
-    mat = vec.fit_transform([m[1] for m in morceaux])
-    return morceaux, vec, mat
-
-def chercher(question, k=5):
-    morceaux, vec, mat = charger_textes()
-    if not morceaux:
-        return []
-    scores = cosine_similarity(vec.transform([question]), mat).ravel()
-    idx = scores.argsort()[::-1][:k]
-    return [morceaux[i] for i in idx if scores[i] > 0]
-
-st.title(f"🇨🇩 {NOM}")
-st.caption("Créé par Déo")
-
-client = anthropic.Anthropic()  # lit la variable ANTHROPIC_API_KEY
-
-if "msgs" not in st.session_state:
-    st.session_state.msgs = []
-
-for m in st.session_state.msgs:
-    st.chat_message(m["role"]).write(m["content"])
-
-q = st.chat_input("Pose ta question fiscale...")
-if q:
-    st.chat_message("user").write(q)
-    extraits = chercher(q)
-    contexte = "\n\n".join(f"[{f}]\n{t}" for f, t in extraits) or "Aucun extrait trouvé."
-    st.session_state.msgs.append({"role": "user", "content": q})
-    r = client.messages.create(
-        model="claude-sonnet-5-5",
-        max_tokens=1000,
-        system=SYSTEM + "\n\nEXTRAITS :\n" + contexte,
-        messages=st.session_state.msgs,
-    )
-    rep = r.content[0].text
-    st.session_state.msgs.append({"role": "assistant", "content": rep})
-    st.chat_message("assistant").write(rep)
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Déo Assistante Fiscalité - Toutes les Notions</title>
+<style>
+body{font-family:Arial;background:#f2f2f2;margin:0;padding:15px}
+.header{background:#0a5c36;color:white;padding:20px;border-radius:15px;text-align:center}
+#search{width:100%;padding:14px;font-size:16px;border-radius:10px;border:2px solid #0a5c36;box-sizing:border-box;margin-top:15px}
+.card{background:white;padding:15px;margin-top:10px;border-radius:12px;box-shadow:0 2px 5px #ccc}
+.question{font-weight:bold;cursor:pointer}
+.answer{display:none;margin-top:8px;line-height:1.5}
+.cat{background:#0a5c36;color:white;display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;margin-bottom:5px}
+</style>
+</head>
+<body>
+<div class="header"><h1>🎓 Déo Assistante Fiscalité</h1><p>Créateur : Déo | TOUTES LES NOTIONS | Tape un mot : TVA, assiette, liquidation...</p></div>
+<input id="search" onkeyup="afficher()" placeholder="Tape un mot... ex: exonération, liquidation, redevance...">
+<div id="liste"></div>
+<script>
+const data=[
+{q:"Définition de l'impôt selon Gaston Jèze ?",c:"IMPÔT",a:"Prestation pécuniaire requise des particuliers par voie d'autorité, à titre définitif et sans contrepartie, en vue de la couverture des charges publiques."},
+{q:"C'est quoi l'impôt ?",c:"IMPÔT",a:"L'argent que l'État demande obligatoirement pour payer routes, écoles, hôpitaux."},
+{q:"Définition de la taxe ?",c:"TAXE",a:"Somme payée à l'État en échange d'un service précis. Exemple : taxe pour un passeport."},
+{q:"Définition de la taxe selon Gaston Jèze ?",c:"TAXE",a:"La taxe est la rémunération d'un service rendu par l'État."},
+{q:"Différence entre impôt, taxe et redevance ?",c:"NOTIONS",a:"Impôt : sans service direct. Taxe : pour un service précis. Redevance : pour utiliser un bien de l'État (mine, forêt, rivière)."},
+{q:"C'est quoi la redevance ?",c:"NOTIONS",a:"Somme payée pour utiliser un bien public. Exemple : redevance minière, redevance forestière."},
+{q:"C'est quoi la parafiscalité ?",c:"NOTIONS",a:"Des cotisations obligatoires pour un secteur précis, pas pour le budget général. Exemple : cotisation CNSS, cotisation à un ordre professionnel."},
+{q:"C'est quoi le droit fiscal ?",c:"NOTIONS",a:"L'ensemble des lois qui organisent les impôts."},
+{q:"C'est quoi la fiscalité ?",c:"NOTIONS",a:"Tout le système des impôts d'un pays."},
+{q:"Caractères de l'impôt ?",c:"NOTIONS",a:"1. Obligatoire 2. Pécuniaire 3. Définitif 4. Sans contrepartie directe 5. Pour les charges publiques."},
+{q:"C'est quoi l'assiette fiscale ?",c:"NOTIONS",a:"La base de calcul. IPR = salaire, IS = bénéfice, TVA = prix."},
+{q:"C'est quoi la liquidation ?",c:"NOTIONS",a:"C'est le calcul de l'impôt. On prend l'assiette, on applique le taux, on trouve le montant à payer. Exemple : Assiette 100.000 x 16% = 16.000 à payer."},
+{q:"C'est quoi le recouvrement ?",c:"NOTIONS",a:"C'est quand l'État encaisse vraiment l'argent. Tu as calculé (liquidation), maintenant tu paies (recouvrement)."},
+{q:"C'est quoi le taux d'imposition ?",c:"NOTIONS",a:"Le pourcentage. TVA 16% = 16 sur 100."},
+{q:"C'est quoi l'exonération ?",c:"NOTIONS",a:"Quand la loi dit : toi tu ne paies pas cet impôt. Exemple : certaines ONG sont exonérées."},
+{q:"C'est quoi la déduction ?",c:"NOTIONS",a:"On enlève une somme avant de calculer l'impôt. Exemple : TVA déductible, frais déductibles."},
+{q:"C'est quoi l'abattement ?",c:"NOTIONS",a:"Une réduction sur l'assiette avant calcul. Exemple : abattement de 10% sur le salaire pour frais."},
+{q:"C'est quoi le crédit d'impôt ?",c:"NOTIONS",a:"Une somme que l'État te doit et qui diminue ton impôt. Exemple : si tu as trop payé de TVA, tu as un crédit."},
+{q:"C'est quoi le contribuable ?",c:"NOTIONS",a:"La personne qui doit payer : toi, moi, une entreprise."},
+{q:"C'est quoi le fait générateur ?",c:"NOTIONS",a:"L'évènement qui fait naître l'impôt. TVA = vente. IPR = paiement du salaire."},
+{q:"C'est quoi l'exigibilité de la TVA ?",c:"TVA",a:"Le moment où l'État peut te demander la TVA. En général, au moment de la vente ou de la facture."},
+{q:"C'est quoi le redevable ?",c:"NOTIONS",a:"La personne qui doit verser l'impôt à l'État, même si ce n'est pas elle qui le supporte. Exemple : pour la TVA, le redevable c'est l'entreprise, mais celui qui paie vraiment c'est le client."},
+{q:"Impôt progressif, proportionnel, régressif ?",c:"NOTIONS",a:"Progressif : plus tu gagnes, plus le % monte (ex: IPR par tranches). Proportionnel : même % pour tous (ex: TVA 16%). Régressif : les pauvres paient proportionnellement plus, c'est injuste."},
+{q:"Impôts directs et indirects ?",c:"NOTIONS",a:"Direct : on te demande directement (IPR, IS). Indirect : caché dans le prix (TVA, douane)."},
+{q:"C'est quoi la TVA ?",c:"TVA",a:"Taxe sur la Valeur Ajoutée. 16% en RDC, payée par le consommateur."},
+{q:"Qui paie vraiment la TVA ?",c:"TVA",a:"Le consommateur final. L'entreprise collecte."},
+{q:"Exemple calcul TVA ?",c:"TVA",a:"Vente 100.000 + TVA 16% = 16.000. Client paie 116.000. Si tu as payé 10.000 de TVA sur achats, tu donnes : 16.000 - 10.000 = 6.000."},
+{q:"Produits exonérés de TVA ?",c:"TVA",a:"Produits de première nécessité, services médicaux, enseignement, exportations."},
+{q:"C'est quoi l'IPR ?",c:"IPR",a:"Impôt Professionnel sur les Rémunérations. Retenu sur le salaire chaque mois."},
+{q:"C'est quoi l'Impôt sur les Sociétés ?",c:"SOCIÉTÉS",a:"Impôt sur le bénéfice d'une entreprise."},
+{q:"C'est quoi le bénéfice ?",c:"SOCIÉTÉS",a:"Bénéfice = Recettes - Dépenses."},
+{q:"C'est quoi la DGI ?",c:"ADMINISTRATION",a:"Direction Générale des Impôts : IPR, IS, TVA."},
+{q:"C'est quoi la DGDA ?",c:"ADMINISTRATION",a:"Direction Générale des Douanes : douane à la frontière."},
+{q:"C'est quoi la DGRAD ?",c:"ADMINISTRATION",a:"Direction Générale des Recettes Administratives : taxes, redevances."},
+{q:"C'est quoi le NIF ?",c:"ADMINISTRATION",a:"Numéro d'Identification Fiscale. Ta carte d'identité fiscale."},
+{q:"C'est quoi la déclaration fiscale ?",c:"ADMINISTRATION",a:"Document où tu dis à la DGI combien tu as gagné."},
+{q:"C'est quoi le contrôle fiscal ?",c:"CONTRÔLE",a:"La DGI vérifie tes papiers, factures, déclarations."},
+{q:"C'est quoi la fraude fiscale ?",c:"CONTRÔLE",a:"Cacher de l'argent, faux documents pour ne pas payer. Interdit."},
+{q:"C'est quoi l'évasion fiscale ?",c:"CONTRÔLE",a:"Utiliser les failles de la loi pour payer moins."},
+{q:"C'est quoi l'optimisation fiscale ?",c:"CONTRÔLE",a:"Payer moins légalement, en utilisant la loi (exonération)."},
+{q:"C'est quoi le contentieux fiscal ?",c:"CONTRÔLE",a:"Le conflit entre toi et la DGI quand tu n'es pas d'accord sur l'impôt."},
+{q:"C'est quoi la réclamation fiscale ?",c:"CONTRÔLE",a:"Quand tu écris à la DGI pour dire : je ne suis pas d'accord, corrigez mon impôt."},
+{q:"C'est quoi le recours fiscal ?",c:"CONTRÔLE",a:"Quand tu vas au tribunal parce que la DGI n'a pas accepté ta réclamation."},
+{q:"C'est quoi l'amnistie fiscale ?",c:"CONTRÔLE",a:"L'État pardonne les anciens impots non payés si tu te déclares maintenant."},
+{q:"C'est quoi la remise gracieuse ?",c:"CONTRÔLE",a:"L'État te pardonne une partie des pénalités parce que tu as eu un problème."},
+{q:"Pénalités fiscales ?",c:"CONTRÔLE",a:"Amendes + intérêts quand tu déclares en retard ou tu ne paies pas."},
+{q:"C'est quoi la prescription fiscale ?",c:"CONTRÔLE",a:"Après quelques années, l'État ne peut plus te réclamer un vieil impôt."},
+{q:"C'est quoi la double imposition ?",c:"INTERNATIONAL",a:"Payer 2 fois l'impôt sur le même argent, dans 2 pays."},
+{q:"C'est quoi un paradis fiscal ?",c:"INTERNATIONAL",a:"Un pays où on paie très peu ou pas d'impôt, où les riches cachent leur argent."},
+{q:"C'est quoi la fiscalité internationale ?",c:"INTERNATIONAL",a:"Les règles pour les entreprises qui travaillent dans plusieurs pays."},
+{q:"C'est quoi la patente ?",c:"IMPÔT",a:"Impôt annuel du commerçant pour exercer son commerce."},
+{q:"C'est quoi l'impôt foncier ?",c:"IMPÔT",a:"Impôt sur maisons, terrains, immeubles."},
+{q:"C'est quoi les droits de douane ?",c:"IMPÔT",a:"Taxe à la frontière quand on fait entrer des marchandises."},
+{q:"C'est quoi l'impôt sur le revenu ?",c:"IMPÔT",a:"Impôt sur ce que tu gagnes : salaire, bénéfice."},
+{q:"C'est quoi l'impôt sur la fortune ?",c:"IMPÔT",a:"Impôt sur ce que tu possèdes : maisons, voitures, argent."},
+{q:"La fiscalité aide le Congo ?",c:"CONGO",a:"Oui, si bien utilisé : routes, écoles, hôpitaux."},
+{q:"Pourquoi les gens ne paient pas au Congo ?",c:"CONGO",a:"Ils ne comprennent pas, pensent que l'argent est volé, beaucoup dans l'informel."},
+{q:"C'est quoi le secteur informel ?",c:"CONGO",a:"Vendeurs, motards, petits commerces non enregistrés à la DGI."},
+{q:"Comment élargir l'assiette fiscale ?",c:"CONGO",a:"Enregistrer plus de gens au NIF, expliquer, simplifier, lutter contre la corruption."},
+];
+function afficher(){
+let m=document.getElementById('search').value.toLowerCase().trim();
+if(m==""){document.getElementById('liste').innerHTML=data.map((d,i)=>`<div class="card"><span class="cat">${d.c}</span><div class="question" onclick="let e=document.getElementById('r${i}');e.style.display=e.style.display=='block'?'none':'block'">❓ ${d.q}</div><div class="answer" id="r${i}">✅ ${d.a}</div></div>`).join('');return;}
+let mots=m.split(" ");
+let l=data.filter(d=>{let t=(d.q+" "+d.a).toLowerCase();return mots.some(w=>w.length>2 && t.includes(w));});
+if(l.length==0){document.getElementById('liste').innerHTML=`<div class="card"><b>😅 Pas encore.</b><br><br>Envoie à Déo, il va l'ajouter.</div>`;}
+else{document.getElementById('liste').innerHTML=l.map((d,i)=>`<div class="card"><span class="cat">${d.c}</span><div class="question" onclick="let e=document.getElementById('r${i}');e.style.display=e.style.display=='block'?'none':'block'">❓ ${d.q}</div><div class="answer" id="r${i}">✅ ${d.a}</div></div>`).join('');}
+}
+afficher();
+</script>
+<p style="text-align:center;color:#999;font-size:13px">© Déo Assistante Fiscalité - Toutes les Notions - Créé par Déo</p>
+</body>
+  </html>
