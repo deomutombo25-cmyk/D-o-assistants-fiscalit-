@@ -196,11 +196,22 @@ JOUR 3: Fais Parties 9-14 (Questions + Quiz) 2 fois!</p>
 </div>
 
 <div class="card">
-<h2>❓ POSE TA QUESTION ICI!</h2>
+<h2>❓ !</h2>
 <p>Ecris ta question sur la fiscalite:</p>
 <input id="maQuestion" type="text" placeholder="Ex: C est quoi TVA?" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ccc">
 <br><br>
 <button onclick="repondreQuestion()" style="background:#2563eb;color:white;padding:12px;width:100%;border:none;border-radius:10px;font-weight:bold">POSER MA QUESTION</button>
 <p id="reponseIA" style="margin-top:15
-</body>
+</div>
+<script>
+function repondreQuestion(){
+var q=document.getElementById('maQuestion').value.toLowerCase();
+var r=document.getElementById('reponseIA');
+if(q.includes('tva')){r.innerText='TVA = 16%. Collectee - Recuperee.';}
+else if(q.includes('ipr')){r.innerText='IPR = Sur le salaire. Par TRANCHE.';}
+else if(q.includes('ibp')){r.innerText='IBP = 30% sur le benefice.';}
+else{r.innerText='Relis les cartes 1 a 8!';}
+}
+  </script>
+  </body>
   </html>
