@@ -1,95 +1,205 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Déo Assistante Fiscalité - Toutes les Notions</title>
-<style>
-body{font-family:Arial;background:#f2f2f2;margin:0;padding:15px}
-.header{background:#0a5c36;color:white;padding:20px;border-radius:15px;text-align:center}
-#search{width:100%;padding:14px;font-size:16px;border-radius:10px;border:2px solid #0a5c36;box-sizing:border-box;margin-top:15px}
-.card{background:white;padding:15px;margin-top:10px;border-radius:12px;box-shadow:0 2px 5px #ccc}
-.question{font-weight:bold;cursor:pointer}
-.answer{display:none;margin-top:8px;line-height:1.5}
-.cat{background:#0a5c36;color:white;display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;margin-bottom:5px}
-</style>
-</head>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DEO IA</title><style>body{background:#0f0f1e;color:white;font-family:Arial;padding:15px}button{padding:12px;margin:5px;border-radius:20px;border:none;font-weight:bold;background:#2a2a4a;color:white}.card{background:#1e1e35;padding:15px;border-radius:15px;margin-top:10px}.vert{background:#00c853;color:white}.q{background:#00c853;color:white;padding:8px 10px;border-radius:20px;margin:3px}.rep{background:#1e1e35;border:2px solid #00c853;padding:15px;border-radius:15px;margin-top:10px;white-space:pre-line}input{width:95%;padding:12px;border-radius:10px}</style></head>
 <body>
-<div class="header"><h1>🎓 Déo Assistante Fiscalité</h1><p>Créateur : Déo | TOUTES LES NOTIONS | Tape un mot : TVA, assiette, liquidation...</p></div>
-<input id="search" onkeyup="afficher()" placeholder="Tape un mot... ex: exonération, liquidation, redevance...">
-<div id="liste"></div>
-<script>
-const data=[
-{q:"Définition de l'impôt selon Gaston Jèze ?",c:"IMPÔT",a:"Prestation pécuniaire requise des particuliers par voie d'autorité, à titre définitif et sans contrepartie, en vue de la couverture des charges publiques."},
-{q:"C'est quoi l'impôt ?",c:"IMPÔT",a:"L'argent que l'État demande obligatoirement pour payer routes, écoles, hôpitaux."},
-{q:"Définition de la taxe ?",c:"TAXE",a:"Somme payée à l'État en échange d'un service précis. Exemple : taxe pour un passeport."},
-{q:"Définition de la taxe selon Gaston Jèze ?",c:"TAXE",a:"La taxe est la rémunération d'un service rendu par l'État."},
-{q:"Différence entre impôt, taxe et redevance ?",c:"NOTIONS",a:"Impôt : sans service direct. Taxe : pour un service précis. Redevance : pour utiliser un bien de l'État (mine, forêt, rivière)."},
-{q:"C'est quoi la redevance ?",c:"NOTIONS",a:"Somme payée pour utiliser un bien public. Exemple : redevance minière, redevance forestière."},
-{q:"C'est quoi la parafiscalité ?",c:"NOTIONS",a:"Des cotisations obligatoires pour un secteur précis, pas pour le budget général. Exemple : cotisation CNSS, cotisation à un ordre professionnel."},
-{q:"C'est quoi le droit fiscal ?",c:"NOTIONS",a:"L'ensemble des lois qui organisent les impôts."},
-{q:"C'est quoi la fiscalité ?",c:"NOTIONS",a:"Tout le système des impôts d'un pays."},
-{q:"Caractères de l'impôt ?",c:"NOTIONS",a:"1. Obligatoire 2. Pécuniaire 3. Définitif 4. Sans contrepartie directe 5. Pour les charges publiques."},
-{q:"C'est quoi l'assiette fiscale ?",c:"NOTIONS",a:"La base de calcul. IPR = salaire, IS = bénéfice, TVA = prix."},
-{q:"C'est quoi la liquidation ?",c:"NOTIONS",a:"C'est le calcul de l'impôt. On prend l'assiette, on applique le taux, on trouve le montant à payer. Exemple : Assiette 100.000 x 16% = 16.000 à payer."},
-{q:"C'est quoi le recouvrement ?",c:"NOTIONS",a:"C'est quand l'État encaisse vraiment l'argent. Tu as calculé (liquidation), maintenant tu paies (recouvrement)."},
-{q:"C'est quoi le taux d'imposition ?",c:"NOTIONS",a:"Le pourcentage. TVA 16% = 16 sur 100."},
-{q:"C'est quoi l'exonération ?",c:"NOTIONS",a:"Quand la loi dit : toi tu ne paies pas cet impôt. Exemple : certaines ONG sont exonérées."},
-{q:"C'est quoi la déduction ?",c:"NOTIONS",a:"On enlève une somme avant de calculer l'impôt. Exemple : TVA déductible, frais déductibles."},
-{q:"C'est quoi l'abattement ?",c:"NOTIONS",a:"Une réduction sur l'assiette avant calcul. Exemple : abattement de 10% sur le salaire pour frais."},
-{q:"C'est quoi le crédit d'impôt ?",c:"NOTIONS",a:"Une somme que l'État te doit et qui diminue ton impôt. Exemple : si tu as trop payé de TVA, tu as un crédit."},
-{q:"C'est quoi le contribuable ?",c:"NOTIONS",a:"La personne qui doit payer : toi, moi, une entreprise."},
-{q:"C'est quoi le fait générateur ?",c:"NOTIONS",a:"L'évènement qui fait naître l'impôt. TVA = vente. IPR = paiement du salaire."},
-{q:"C'est quoi l'exigibilité de la TVA ?",c:"TVA",a:"Le moment où l'État peut te demander la TVA. En général, au moment de la vente ou de la facture."},
-{q:"C'est quoi le redevable ?",c:"NOTIONS",a:"La personne qui doit verser l'impôt à l'État, même si ce n'est pas elle qui le supporte. Exemple : pour la TVA, le redevable c'est l'entreprise, mais celui qui paie vraiment c'est le client."},
-{q:"Impôt progressif, proportionnel, régressif ?",c:"NOTIONS",a:"Progressif : plus tu gagnes, plus le % monte (ex: IPR par tranches). Proportionnel : même % pour tous (ex: TVA 16%). Régressif : les pauvres paient proportionnellement plus, c'est injuste."},
-{q:"Impôts directs et indirects ?",c:"NOTIONS",a:"Direct : on te demande directement (IPR, IS). Indirect : caché dans le prix (TVA, douane)."},
-{q:"C'est quoi la TVA ?",c:"TVA",a:"Taxe sur la Valeur Ajoutée. 16% en RDC, payée par le consommateur."},
-{q:"Qui paie vraiment la TVA ?",c:"TVA",a:"Le consommateur final. L'entreprise collecte."},
-{q:"Exemple calcul TVA ?",c:"TVA",a:"Vente 100.000 + TVA 16% = 16.000. Client paie 116.000. Si tu as payé 10.000 de TVA sur achats, tu donnes : 16.000 - 10.000 = 6.000."},
-{q:"Produits exonérés de TVA ?",c:"TVA",a:"Produits de première nécessité, services médicaux, enseignement, exportations."},
-{q:"C'est quoi l'IPR ?",c:"IPR",a:"Impôt Professionnel sur les Rémunérations. Retenu sur le salaire chaque mois."},
-{q:"C'est quoi l'Impôt sur les Sociétés ?",c:"SOCIÉTÉS",a:"Impôt sur le bénéfice d'une entreprise."},
-{q:"C'est quoi le bénéfice ?",c:"SOCIÉTÉS",a:"Bénéfice = Recettes - Dépenses."},
-{q:"C'est quoi la DGI ?",c:"ADMINISTRATION",a:"Direction Générale des Impôts : IPR, IS, TVA."},
-{q:"C'est quoi la DGDA ?",c:"ADMINISTRATION",a:"Direction Générale des Douanes : douane à la frontière."},
-{q:"C'est quoi la DGRAD ?",c:"ADMINISTRATION",a:"Direction Générale des Recettes Administratives : taxes, redevances."},
-{q:"C'est quoi le NIF ?",c:"ADMINISTRATION",a:"Numéro d'Identification Fiscale. Ta carte d'identité fiscale."},
-{q:"C'est quoi la déclaration fiscale ?",c:"ADMINISTRATION",a:"Document où tu dis à la DGI combien tu as gagné."},
-{q:"C'est quoi le contrôle fiscal ?",c:"CONTRÔLE",a:"La DGI vérifie tes papiers, factures, déclarations."},
-{q:"C'est quoi la fraude fiscale ?",c:"CONTRÔLE",a:"Cacher de l'argent, faux documents pour ne pas payer. Interdit."},
-{q:"C'est quoi l'évasion fiscale ?",c:"CONTRÔLE",a:"Utiliser les failles de la loi pour payer moins."},
-{q:"C'est quoi l'optimisation fiscale ?",c:"CONTRÔLE",a:"Payer moins légalement, en utilisant la loi (exonération)."},
-{q:"C'est quoi le contentieux fiscal ?",c:"CONTRÔLE",a:"Le conflit entre toi et la DGI quand tu n'es pas d'accord sur l'impôt."},
-{q:"C'est quoi la réclamation fiscale ?",c:"CONTRÔLE",a:"Quand tu écris à la DGI pour dire : je ne suis pas d'accord, corrigez mon impôt."},
-{q:"C'est quoi le recours fiscal ?",c:"CONTRÔLE",a:"Quand tu vas au tribunal parce que la DGI n'a pas accepté ta réclamation."},
-{q:"C'est quoi l'amnistie fiscale ?",c:"CONTRÔLE",a:"L'État pardonne les anciens impots non payés si tu te déclares maintenant."},
-{q:"C'est quoi la remise gracieuse ?",c:"CONTRÔLE",a:"L'État te pardonne une partie des pénalités parce que tu as eu un problème."},
-{q:"Pénalités fiscales ?",c:"CONTRÔLE",a:"Amendes + intérêts quand tu déclares en retard ou tu ne paies pas."},
-{q:"C'est quoi la prescription fiscale ?",c:"CONTRÔLE",a:"Après quelques années, l'État ne peut plus te réclamer un vieil impôt."},
-{q:"C'est quoi la double imposition ?",c:"INTERNATIONAL",a:"Payer 2 fois l'impôt sur le même argent, dans 2 pays."},
-{q:"C'est quoi un paradis fiscal ?",c:"INTERNATIONAL",a:"Un pays où on paie très peu ou pas d'impôt, où les riches cachent leur argent."},
-{q:"C'est quoi la fiscalité internationale ?",c:"INTERNATIONAL",a:"Les règles pour les entreprises qui travaillent dans plusieurs pays."},
-{q:"C'est quoi la patente ?",c:"IMPÔT",a:"Impôt annuel du commerçant pour exercer son commerce."},
-{q:"C'est quoi l'impôt foncier ?",c:"IMPÔT",a:"Impôt sur maisons, terrains, immeubles."},
-{q:"C'est quoi les droits de douane ?",c:"IMPÔT",a:"Taxe à la frontière quand on fait entrer des marchandises."},
-{q:"C'est quoi l'impôt sur le revenu ?",c:"IMPÔT",a:"Impôt sur ce que tu gagnes : salaire, bénéfice."},
-{q:"C'est quoi l'impôt sur la fortune ?",c:"IMPÔT",a:"Impôt sur ce que tu possèdes : maisons, voitures, argent."},
-{q:"La fiscalité aide le Congo ?",c:"CONGO",a:"Oui, si bien utilisé : routes, écoles, hôpitaux."},
-{q:"Pourquoi les gens ne paient pas au Congo ?",c:"CONGO",a:"Ils ne comprennent pas, pensent que l'argent est volé, beaucoup dans l'informel."},
-{q:"C'est quoi le secteur informel ?",c:"CONGO",a:"Vendeurs, motards, petits commerces non enregistrés à la DGI."},
-{q:"Comment élargir l'assiette fiscale ?",c:"CONGO",a:"Enregistrer plus de gens au NIF, expliquer, simplifier, lutter contre la corruption."},
-];
-function afficher(){
-let m=document.getElementById('search').value.toLowerCase().trim();
-if(m==""){document.getElementById('liste').innerHTML=data.map((d,i)=>`<div class="card"><span class="cat">${d.c}</span><div class="question" onclick="let e=document.getElementById('r${i}');e.style.display=e.style.display=='block'?'none':'block'">❓ ${d.q}</div><div class="answer" id="r${i}">✅ ${d.a}</div></div>`).join('');return;}
-let mots=m.split(" ");
-let l=data.filter(d=>{let t=(d.q+" "+d.a).toLowerCase();return mots.some(w=>w.length>2 && t.includes(w));});
-if(l.length==0){document.getElementById('liste').innerHTML=`<div class="card"><b>😅 Pas encore.</b><br><br>Envoie à Déo, il va l'ajouter.</div>`;}
-else{document.getElementById('liste').innerHTML=l.map((d,i)=>`<div class="card"><span class="cat">${d.c}</span><div class="question" onclick="let e=document.getElementById('r${i}');e.style.display=e.style.display=='block'?'none':'block'">❓ ${d.q}</div><div class="answer" id="r${i}">✅ ${d.a}</div></div>`).join('');}
-}
-afficher();
-</script>
-<p style="text-align:center;color:#999;font-size:13px">© Déo Assistante Fiscalité - Toutes les Notions - Créé par Déo</p>
-</body>
-  </html>
+<h1>DEO IA - FISCALITE</h1><p>Site de Deo Mutombo - Kinshasa - 60 Notions - 50 Questions - 20 Quiz - 500 Lignes</p>
+<div class="card"><h2>BIENVENUE DEO!</h2><p>1. Mes Cours: Parties 2 a 8<br>2. Poser Question: Parties 9 a 13<br>3. Quiz: Parties 14 a 15<br>4. Tout est en-dessous, on ajoute petit a petit!</p></div>
+<!-- AJOUTER ICI LES PROCHAINES PARTIES -->
+</body></html>
+<div class="card"><h2>PARTIE 2 - NOTIONS DE BASE</h2><p><b>1. IMPOT:</b> Prestation pecuniaire, sans contrepartie, pour charges publiques.</p><p><b>2. TAXE:</b> Avec contrepartie. Tu paies, tu recois un service. Ex: passeport, permis.</p><p><b>3. REDEVANCE:</b> Pour usage d un bien public. Ex: mine, riviere, marche, frequence radio.</p><p><b>4. GASTON JEZE:</b> L impot est une prestation pecuniaire requise des particuliers par voie d autorite, a titre definitif et sans contrepartie, en vue de la couverture des charges publiques.</p><p><b>5. PECUNIAIRE:</b> En argent. Pas en poulet, pas en manioc!</p><p><b>6. VOIE D AUTORITE:</b> Obligatoire. Etat impose, tu ne peux pas refuser.</p><p><b>7. DEFINITIF:</b> Tu ne recuperes jamais ton argent.</p><p><b>8. SANS CONTREPARTIE:</b> Tu ne recois rien en retour direct.</p><p><b>9. CHARGES PUBLIQUES:</b> Pour payer routes, ecoles, hopitaux, policiers.</p><p><b>10. DIFFERENCE:</b> IMPOT = SANS / TAXE = AVEC service / REDEVANCE = Pour USAGE bien public.</p></div>
+<div class="card"><h2>PARTIE 3 - CARACTERISTIQUES + FONCTIONS</h2><p><b>3 CARACTERISTIQUES DE L IMPOT:</b><br>1. Obligatoire - Personne ne peut refuser<br>2. Pecuniaire - En argent<br>3. Sans contrepartie - Sans retour direct</p><p><b>3 FONCTIONS DE L IMPOT:</b><br>1. REPARTITION: L Etat partage la richesse. Les riches paient plus.<br>2. INTERVENTIONNISME: L Etat utilise l impot pour orienter. Ex: taxe tabac pour diminuer tabac.<br>3. REDISTRIBUTION: L Etat prend aux riches pour aider les pauvres. Ex: bourse, aide sociale.</p><p><b>DIRECT vs INDIRECT:</b><br>DIRECT: Sur la personne ou revenu. Ex: IPR, IBP, Foncier.<br>INDIRECT: Sur la depense, cache dans le prix. Ex: TVA, Accises.</p><p><b>ASSIETTE:</b> C est sur quoi on calcule l impot. Ex: Ton salaire pour IPR.<br><b>TAUX:</b> Pourcentage qu on applique. Ex: 20% pour TVA.<br><b>BAREME:</b> Tableau avec les tranches pour IPR.<br><b>FAIT GENERATEUR:</b> Ce qui declenche l impot. Ex: Recevoir salaire = IPR.<br><b>EXIGIBILITE:</b> Moment ou l Etat peut reclamer l argent.</p></div>
+<div class="card">
+<h2>PARTIE 4 - IPR - IMPOT SUR REVENUS</h2>
+<p><b>IPR = Impot Professionnel sur les Revenus</b></p>
+<p><b>QUI PAIE?</b> Tout travailleur qui a un salaire.</p>
+<p><b>QUI RETIENT?</b> L employeur. C est la RETENUE A LA SOURCE.</p>
+<p><b>BAREME IPR:</b><br>
+0 a 40000 FC = 0%<br>
+40001 a 60000 FC = 10%<br>
+60001 a 80000 FC = 15%<br>
+80001 a 120000 FC = 20%<br>
+Plus de 120000 FC = 30%</p>
+<p><b>EXEMPLE CALCUL:</b><br>
+Salaire = 100.000 FC<br>
+Tu calcules par tranche, pas tout a 20%!</p>
+<p><b>PIEGE EXAMEN:</b> IPR est DIRECT, pas INDIRECT! IPR est sur le REVENU, pas sur la DEPENSE!</p>
+<p><b>NIF:</b> Numero d Identification Fiscale. Sans NIF, tu ne peux pas payer IPR.</p>
+<p><b>QUEL SALAIRE?</b> Salaire BRUT = Avant retenue. NET = Apres retenue.</p>
+</div>
+<div class="card">
+<h2>PARTIE 5 - TVA - TAXE SUR VALEUR AJOUTEE</h2>
+<p><b>TVA = Taxe sur la Valeur Ajoutee</b></p>
+<p><b>TAUX EN RDC:</b> 16% ! Retiens bien, 16% pas 20% !</p>
+<p><b>QUI PAIE VRAIMENT?</b> Le CONSOMMATEUR final! Toi quand tu achetes!</p>
+<p><b>QUI COLLECTE?</b> Le VENDEUR collecte pour l Etat.</p>
+<p><b>VALEUR AJOUTEE =</b> Prix de vente - Prix d achat.</p>
+<p><b>FORMULE:</b><br>
+TVA a payer = TVA COLLECTEE - TVA RECUPEREE<br>
+TVA Collectee = Sur tes VENTES<br>
+TVA Recuperee = Sur tes ACHATS</p>
+<p><b>EXEMPLE CALCUL:</b><br>
+<div class="card">
+<h2>PARTIE 6 - IBP - IMPOT SUR BENEFICES</h2>
+<p><b>IBP = Impot sur les Benefices et Profits</b></p>
+<p><b>QUI PAIE?</b> Les entreprises, les societes, les commercants.</p>
+<p><b>TAUX IBP:</b> 30% sur le benefice!</p>
+<p><b>BENEFICE = Recettes - Charges</b></p>
+<p><b>EXEMPLE CALCUL:</b><br>
+Recettes = 10.000.000 FC<br>
+Charges = 7.000.000 FC<br>
+Benefice = 3.000.000 FC<br>
+IBP a payer = 3.000.000 x 30% = 900.000 FC</p>
+<p><b>BENEFICE COMPTABLE vs FISCAL:</b><br>
+Comptable = Ce que tu as vraiment gagne.<br>
+Fiscal = Apres que l Etat enleve les charges non deductibles.</p>
+<p><b>CHARGES DEDUCTIBLES:</b> Loyer, Salaire, Electricite, Transport.<br>
+<b>NON DEDUCTIBLES:</b> Amendes, Depenses personnelles du patron.</p>
+<p><b>IMPOT MINIMUM:</b> Meme si tu as 0 benefice, tu paies 1% de ton Chiffre d Affaires! Minimum 1%!</p>
+<p><b>CHIFFRE D AFFAIRES =</b> Total de toutes tes ventes, sans enlever les charges.</p>
+<p><b>PIEGE EXAMEN:</b> IBP est DIRECT! Sur le BENEFICE, pas sur la VENTE!</p>
+</div>
+<div class="card">
+<h2>PARTIE 7 - AUTRES IMPOTS</h2>
+<p><b>1. IMPOT FONCIER:</b><br>
+Sur les maisons, parcelles, batiments.<br>
+Qui paie? Le proprietaire. Meme si la maison est vide!</p>
+<p><b>2. REVENUS LOCATIFS:</b><br>
+Sur l argent du loyer.<br>
+TAUX: 20% du loyer!<br>
+Exemple: Loyer 500.000 FC -> Impot = 100.000 FC</p>
+<p><b>3. PATENTE:</b><br>
+Pour avoir le droit d exercer un commerce.<br>
+Tu paies chaque annee pour ta boutique, ton magasin.</p>
+<p><b>4. DROITS D ACCISES:</b><br>
+Sur les produits de luxe ou dangereux.<br>
+Ex: Cigarette, Alcool, Parfum, Voiture de luxe.</p>
+<p><b>5. DROITS DE DOUANE - DGDA:</b><br>
+Sur les produits qui entrent au Congo.<br>
+Tu importes une voiture -> Tu paies a la douane.</p>
+<p><b>6. IMPOT SUR VEHICULE:</b><br>
+Vignette chaque annee pour ta voiture.</p>
+<p><b>PIEGE:</b> Foncier = Sur la MAISON. Locatifs = Sur le LOYER. Ne confonds pas!</p>
+</div>
+<div class="card">
+<h2>PARTIE 8 - CONTROLE + DGI, DGDA, DGRAD, DGRK</h2>
+<p><b>DGI = Direction Generale des Impots</b><br>
+Pour IPR, IBP, TVA, Foncier. C est la plus importante!</p>
+<p><b>DGDA = Direction Generale des Douanes et Accises</b><br>
+Pour les produits qui entrent au Congo + Accises.</p>
+<p><b>DGRAD = Direction Generale des Recettes Administratives</b><br>
+Pour les recettes de l administration: passeport, permis, amendes.</p>
+<p><b>DGRK = Direction Generale des Recettes de Kinshasa</b><br>
+Juste pour la ville de Kinshasa!</p>
+<p><b>CONTROLE FISCAL:</b><br>
+1. AVIS: L Etat t envoie un avis 15 JOURS avant.<br>
+2. VERIFICATION SUR PIECES: Ils regardent tes papiers au bureau.<br>
+3. VERIFICATION SUR PLACE: Ils viennent chez toi!</p>
+<p><b>SI ERREUR:</b><br>
+REDRESSEMENT = Ils corrigent ton calcul.<br>
+AMENDE = Tu paies plus.<br>
+Tu as 30 JOURS pour repondre!</p>
+<p><b>QUITTUS / QUITUS FISCAL:</b><br>
+Papier qui prouve que tu as tout paye. Sans lui, pas de marche public!</p>
+<p><b>FRAUDE vs EVASION:</b><br>
+FRAUDE = Illegal! Tu caches
+  <div class="card">
+<h2>PARTIE 9 - QUESTIONS 1 A 10</h2>
+<p><b>Q1: C est quoi l impot selon Gaston Jeze?</b><br>R: Prestation pecuniaire, par voie d autorite, definitif, sans contrepartie, pour charges publiques.</p>
+<p><b>Q2: Difference entre Impot et Taxe?</b><br>R: Impot = SANS contrepartie. Taxe = AVEC contrepartie.</p>
+<p><b>Q3: C est quoi une Redevance?</b><br>R: Pour usage d un bien public. Ex: mine, marche.</p>
+<p><b>Q4: C est quoi l assiette?</b><br>R: Sur quoi on calcule. Ex: Salaire pour IPR.</p>
+<p><b>Q5: C est quoi le Fait Generateur?</b><br>R: Ce qui declenche l impot. Ex: Recevoir salaire.</p>
+<p><b>Q6: C est quoi le Taux?</b><br>R: Pourcentage. Ex: TVA 16%.</p>
+<p><b>Q7: 3 Caracteristiques de l impot?</b><br>R: Obligatoire, Pecuniaire, Sans contrepartie.</p>
+<p><b>Q8: 3 Fonctions de l impot?</b><br>R: Repartition, Interventionnisme, Redistribution.</p>
+<p><b>Q9: Impot Direct ou Indirect? IPR?</b><br>R: DIRECT! Sur le revenu.</p>
+<p><b>Q10: Impot Direct ou Indirect? TVA?</b><br>R: INDIRECT! Sur la depense.</p>
+  </div>
+  <div class="card">
+<h2>PARTIE 10 - QUESTIONS 11 A 20</h2>
+<p><b>Q11: Taux TVA en RDC?</b><br>R: 16% !</p>
+<p><b>Q12: Formule TVA a payer?</b><br>R: TVA Collectee - TVA Recuperee</p>
+<p><b>Q13: Qui paie vraiment la TVA?</b><br>R: Le consommateur final.</p>
+<p><b>Q14: C est quoi le Credit TVA?</b><br>R: Quand TVA Recuperee est plus grande, l Etat te doit.</p>
+<p><b>Q15: Qui retient l IPR?</b><br>R: L employeur, retenue a la source.</p>
+<p><b>Q16: Taux IBP?</b><br>R: 30% sur le benefice.</p>
+<p><b>Q17: Formule Benefice?</b><br>R: Recettes - Charges</p>
+<p><b>Q18: Impot Minimum, c est combien?</b><br>R: 1% du Chiffre d Affaires.</p>
+<p><b>Q19: Revenus Locatifs, taux?</b><br>R: 20% du loyer.</p>
+<p><b>Q20: Difference Foncier et Locatifs?</b><br>R: Foncier = Sur la MAISON. Locatifs = Sur le LOYER.</p>
+  </div>
+  <div class="card">
+<h2>PARTIE 11 - QUESTIONS 21 A 30</h2>
+<p><b>Q21: DGI, c est quoi?</b><br>R: Direction Generale des Impots. Pour IPR, IBP, TVA.</p>
+<p><b>Q22: DGDA, c est quoi?</b><br>R: Douanes et Accises. Pour produits qui entrent au Congo.</p>
+<p><b>Q23: DGRAD, c est quoi?</b><br>R: Recettes Administratives. Passeport, permis.</p>
+<p><b>Q24: DGRK, c est quoi?</b><br>R: Recettes de Kinshasa. Juste pour Kinshasa.</p>
+<p><b>Q25: Controle fiscal, combien de jours avant?</b><br>R: 15 JOURS avant, avec un AVIS.</p>
+<p><b>Q26: Difference Verification sur pieces et sur place?</b><br>R: Pieces = Au bureau. Sur place = Ils viennent chez toi.</p>
+<p><b>Q27: Fraude vs Evasion?</b><br>R: Fraude = Illegal, prison. Evasion = Legal, malin.</p>
+<p><b>Q28: C est quoi le Redressement?</b><br>R: L Etat corrige ton calcul d impot.</p>
+<p><b>Q29: C est quoi le Quitus Fiscal?</b><br>R: Papier qui prouve que tu as tout paye.</p>
+<p><b>Q30: Prescription, c est combien d annees?</b><br>R: 3 ans. Apres 3 ans, l Etat ne peut plus reclamer.</p>
+  </div>
+  <div class="card">
+<h2>PARTIE 12 - QUESTIONS 31 A 40 + CALCULS</h2>
+<p><b>Q31: Salaire 100.000 FC, IPR? Calcule par tranche!</b><br>R: Ne mets pas tout a 20%! Tu calcules tranche par tranche.</p>
+<p><b>Q32: Vente 1.000.000 FC, TVA Collectee?</b><br>R: 1.000.000 x 16% = 160.000 FC</p>
+<p><b>Q33: Achat 500.000 FC, TVA Recuperee?</b><br>R: 500.000 x 16% = 80.000 FC</p>
+<p><b>Q34: TVA a payer dans Q32-Q33?</b><br>R: 160.000 - 80.000 = 80.000 FC</p>
+<p><b>Q35: Recettes 10.000.000, Charges 7.000.000, IBP?</b><br>R: Benefice 3.000.000 x 30% = 900.000 FC</p>
+<p><b>Q36: Loyer 500.000 FC, Impot Locatif?</b><br>R: 500.000 x 20% = 100.000 FC</p>
+<p><b>Q37: Chiffre d Affaires 5.000.000 FC, Impot Minimum?</b><br>R: 5.000.000 x 1% = 50.000 FC</p>
+<p><b>Q38: C est quoi le NIF?</b><br>R: Numero d
+  <div class="card">
+<h2>PARTIE 13 - QUESTIONS PIEGES 41 A 50</h2>
+<p><b>Q41: PIEGE: TVA est-elle une charge pour l entreprise?</b><br>R: NON! Elle est NEUTRE. Le consommateur paie.</p>
+<p><b>Q42: PIEGE: IPR est-il sur la depense?</b><br>R: NON! Sur le REVENU, sur le SALAIRE.</p>
+<p><b>Q43: PIEGE: Taxe et Impot, c est pareil?</b><br>R: NON! Taxe = AVEC contrepartie. Impot = SANS.</p>
+<p><b>Q44: PIEGE: Si tu as 0 benefice, tu paies 0 IBP?</b><br>R: NON! Tu paies IMPOT MINIMUM 1% du CA.</p>
+<p><b>Q45: PIEGE: Amende, c est deductible?</b><br>R: NON! Amende = NON deductible.</p>
+<p><b>Q46: PIEGE: Droit de douane, qui le paie?</b><br>R: Celui qui IMPORTE au Congo.</p>
+<p><b>Q47: PIEGE: TVA sur Ecole, Hopital?</b><br>R: EXONERE! 0% TVA.</p>
+<p><b>Q48: PIEGE: Qui paie l Impot Foncier si
+  <div class="card">
+<h2>PARTIE 14 - QUIZ INTERACTIF - Teste-toi!</h2>
+<p><b>Question 1: Taux TVA en RDC?</b></p>
+<button onclick="alert('BRAVO! 16% est correct!')">A) 16%</button>
+<button onclick="alert('NON! Pas 20%, c est 16%!')">B) 20%</button>
+<button onclick="alert('NON! Pas 30%, c est 16%!')">C) 30%</button>
+<p><b>Question 2: IPR est Direct ou Indirect?</b></p>
+<button onclick="alert('BRAVO! IPR est DIRECT!')">A) DIRECT</button>
+<button onclick="alert('NON! IPR est DIRECT, pas Indirect!')">B) INDIRECT</button>
+<p><b>Question 3: IBP, taux?</b></p>
+<button onclick="alert('BRAVO! 30%!')">A) 30%</button>
+<button onclick="alert('NON! C est 30%, pas 16%!')">B) 16%</button>
+<p><b>Question 4: DGI, c est pour quoi?</b></p>
+<button onclick="alert('BRAVO! IPR, IBP, TVA!')">A) IPR, IBP, TVA</button>
+<button onclick="alert('NON! Ca c est DGDA!')">B) Douane
+  <div class="card" style="background:#dcfce7;border:3px solid #22c55e">
+<h2>🎉 PARTIE 15 - TU ES PRET! REVISION FINALE</h2>
+<p><b>PLAN DE REVISION 3 JOURS:</b><br>
+JOUR 1: Relis Parties 1-4 (Definitions + IPR)<br>
+JOUR 2: Relis Parties 5-8 (TVA, IBP, Autres Impots)<br>
+JOUR 3: Fais Parties 9-14 (Questions + Quiz) 2 fois!</p>
+<p><b>5 CHOSES A NE JAMAIS OUBLIER:</b><br>
+1. TVA = 16%<br>
+2. IBP = 30%<br>
+3. Locatifs = 20%<br>
+4. IPR = Par TRANCHE, pas tout a 20%!<br>
+5. Impot = SANS contrepartie, Taxe = AVEC</p>
+<p><b>LE JOUR DE L EXAMEN:</b><br>
+- Lis bien la question<br>
+- Si on dit VENTE -> Pense TVA<br>
+- Si on dit SALAIRE -> Pense IPR<br>
+- Si on dit BENEFICE -> Pense IBP<br>
+- Si on dit LOYER -> Pense 20%</p>
+<p><b>DEO, TU VAS REUSSIR! TU AS TRAVAILLE DUR!</b></p>
+</div>
+
+<div class="card">
+<h2>❓ POSE TA QUESTION ICI!</h2>
+<p>Ecris ta question sur la fiscalite:</p>
+<input id="maQuestion" type="text" placeholder="Ex: C est quoi TVA?" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ccc">
+<br><br>
+<button onclick="repondreQuestion()" style="background:#2563eb;color:white;padding:12px;width:100%;border:none;border-radius:10px;font-weight:bold">POSER MA QUESTION</button>
+<p id="reponseIA" style="margin-top:15
